@@ -66,7 +66,7 @@ public class Connexion extends AppCompatActivity {
         Toast.makeText(this, "Bouton Inscription cliqué !", Toast.LENGTH_SHORT).show();
     }
 
-    // Méthode de test pour ouvrir l'activité Localisation
+    /*// Méthode de test pour ouvrir l'activité Localisation
     public void ouvrirLocalisation(View v) {
         Button btn = (Button) findViewById(R.id.ouvrir_localisation);
 
@@ -76,5 +76,5 @@ public class Connexion extends AppCompatActivity {
                 startActivity(new Intent(Connexion.this, Localisation.class));
             }
         });
-    }
+    }*/
 }
