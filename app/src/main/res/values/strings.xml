@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Neige</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="connexion">Connexion</string>
+    <string name="passwordreset">Mot de passe oublié ?</string>
+    <string name="inscription">S\'inscrire</string>
+</resources>
