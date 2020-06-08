@@ -5,4 +5,5 @@
     <string name="connexion">Connexion</string>
     <string name="passwordreset">Mot de passe oublié ?</string>
     <string name="inscription">S\'inscrire</string>
+    <string name="get_current_position">Position actuelle</string>
 </resources>
