@@ -17,30 +17,42 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 // public class Localisation extends AppCompatActivity implements LocationListener {
-public class Localisation extends AppCompatActivity {
+public class Localisation extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAddress;
-    private ProgressBar progressBar;
+    // private ProgressBar progressBar;
     private ResultReceiver resultReceiver;
     // private LocationManager lm;
+    GoogleMap map;
+    SupportMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_localisation);
 
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         resultReceiver = new AddressResultReceiver(new Handler());
 
         textLatLong = findViewById(R.id.textLatLong);
-        progressBar = findViewById(R.id.progressBar);
+        // progressBar = findViewById(R.id.progressBar);
         textAddress = findViewById(R.id.textAddress);
 
         findViewById(R.id.buttonGetCurrentPosition).setOnClickListener(new View.OnClickListener() {
@@ -72,7 +84,7 @@ public class Localisation extends AppCompatActivity {
     }
 
     private void getCurrentLocation() {
-        progressBar.setVisibility(View.VISIBLE);
+        // progressBar.setVisibility(View.VISIBLE);
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(3000);
@@ -114,8 +126,11 @@ public class Localisation extends AppCompatActivity {
                             location.setLatitude(latitude);
                             location.setLongitude(longitude);
                             fetchAddressFromLatLong(location);
+                            LatLng pos = new LatLng(latitude, longitude);
+                            map.addMarker(new MarkerOptions().position(pos).title("Position actuelle"));
+                            map.moveCamera(CameraUpdateFactory.newLatLng(pos));
                         } else {
-                            progressBar.setVisibility(View.GONE);
+                            // progressBar.setVisibility(View.GONE);
                         }
                     }
                 }, Looper.getMainLooper());
@@ -127,6 +142,15 @@ public class Localisation extends AppCompatActivity {
         intent.putExtra(Constants.LOCATION_DATA_EXTRA, location);
         startService(intent);
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        //LatLng pos = new LatLng(19, 75);
+        //map.addMarker(new MarkerOptions().position(pos).title("Position actuelle"));
+        //map.moveCamera(CameraUpdateFactory.newLatLng(pos)); */
+    }
+
     private class AddressResultReceiver extends ResultReceiver {
 
         AddressResultReceiver(Handler handler) {
@@ -141,7 +165,7 @@ public class Localisation extends AppCompatActivity {
             } else {
                 Toast.makeText(Localisation.this, resultData.getString(Constants.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
             }
-            progressBar.setVisibility(View.GONE);
+            // progressBar.setVisibility(View.GONE);
         }
     }
 

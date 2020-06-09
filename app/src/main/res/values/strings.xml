@@ -6,4 +6,7 @@
     <string name="passwordreset">Mot de passe oublié ?</string>
     <string name="inscription">S\'inscrire</string>
     <string name="get_current_position">Position actuelle</string>
+    <string name="aideGPS">Veuillez cliquer sur le bouton pour confirmer votre position GPS.</string>
+    <string name="saisieFormulaire">Saisie du formulaire</string>
+    <string name="titreGPS">1. Localisation GPS</string>
 </resources>
