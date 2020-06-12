@@ -1,12 +1,9 @@
 <resources>
     <string name="app_name">Neige</string>
-    <string name="username">Nom d\'utilisateur</string>
-    <string name="password">Mot de passe</string>
-    <string name="connexion">Connexion</string>
-    <string name="passwordreset">Mot de passe oublié ?</string>
-    <string name="inscription">S\'inscrire</string>
     <string name="get_current_position">Position actuelle</string>
-    <string name="aideGPS">Veuillez cliquer sur le bouton pour confirmer votre position GPS.</string>
+    <string name="aideGPS">Position GPS (Latitude, Longitude, Altitude, et Précision).</string>
     <string name="saisieFormulaire">Saisie du formulaire</string>
     <string name="titreGPS">1. Localisation GPS</string>
+    <string name="titrePourcentageDeNeige">Pourcentage de neige</string>
+    <string name="aidePourcentageDeNeige">Pourcentage de neige dans un cercle de rayon 10m.</string>
 </resources>

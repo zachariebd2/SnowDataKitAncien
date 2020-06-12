@@ -9,127 +9,57 @@
     android:orientation="vertical"
     tools:context=".Localisation">
 
-
-    <TextView
-        android:id="@+id/aideLocalisation2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="34dp"
-        android:text="@string/aideGPS"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonGetCurrentPosition"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/localisationGPS" />
-
     <Button
         android:id="@+id/buttonGetCurrentPosition"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginBottom="29dp"
+        android:layout_width="304dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="11dp"
         android:background="@drawable/button_rounded"
         android:text="@string/get_current_position"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/map"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aideLocalisation2" />
-
-    <TextView
-        android:id="@+id/textLatLong"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textAddress"
+        app:layout_constraintBottom_toTopOf="@+id/textLatLong"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map" />
 
     <TextView
-        android:id="@+id/textAddress"
+        android:id="@+id/textPrecision"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textLatLong" />
 
-    <!--<ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="20dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginBottom="96dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/textAddress"
-        app:layout_constraintEnd_toEndOf="@+id/localisationGPS"
-        app:layout_constraintTop_toTopOf="@+id/aideLocalisation2" />-->
-
     <TextView
-        android:id="@+id/localisationGPS"
-        android:layout_width="wrap_content"
+        android:id="@+id/textLatLong"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/titreGPS"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/aideLocalisation2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titreFormulaire" />
-
-    <TextView
-        android:id="@+id/titreFormulaire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:layout_marginBottom="31dp"
-        android:text="@string/saisieFormulaire"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/localisationGPS"
+        app:layout_constraintBottom_toTopOf="@+id/textPrecision"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonGetCurrentPosition" />
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textLatLong"
+        android:layout_marginBottom="13dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGetCurrentPosition"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGetCurrentPosition" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
