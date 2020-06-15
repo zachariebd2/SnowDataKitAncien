@@ -2,6 +2,7 @@ package com.example.neige;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +29,10 @@ public class NeigePourcentage extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioForm);
         textView = findViewById(R.id.textView_selected);
 
+        // Bundle pour stocker les extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            // Stockage des extras dans de nouvelles variables
             restoredAccuracy = extras.getInt("savedAccuracy");
             restoredAltitude = extras.getInt("savedAltitude");
             restoredLatitude = extras.getDouble("savedLatitude");
@@ -37,6 +40,7 @@ public class NeigePourcentage extends AppCompatActivity {
 
         }
 
+        // Bouton confirmer choix : On se contente de modifier le textView pour l'instant
         Button boutonConfirmer = findViewById(R.id.confirmer);
         boutonConfirmer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,17 +48,19 @@ public class NeigePourcentage extends AppCompatActivity {
                 int radioId = radioGroup.getCheckedRadioButtonId();
                 radioButton = findViewById(radioId);
                 textView.setText("Sélection : " + radioButton.getText());
+                Log.i("ID RADIO", "ID du bouton radio choisi : " + radioButton.getId());
             }
         });
     }
 
+    // Swipe vers l'activité Localisation
     public boolean onTouchEvent(MotionEvent touchEvent) {
         switch (touchEvent.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN: // Lorsque l'utilisateur clique sur l'écran sur l'écran
                 x1 = touchEvent.getX();
                 y1 = touchEvent.getY();
                 break;
-            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_UP: // Lorsque l'utilisateur retire son doigt de l'écran
                 x2 = touchEvent.getX();
                 y2 = touchEvent.getY();
                 if (x1 < x2) {
@@ -64,7 +70,7 @@ public class NeigePourcentage extends AppCompatActivity {
                     i.putExtra("re_savedAltitude", restoredAltitude);
                     i.putExtra("re_savedLongitude", restoredLongitude);
                     i.putExtra("re_savedLatitude", restoredLatitude);
-                    startActivity(i);
+                    startActivity(i); // On lance l'activité Localisation
                 }
                 break;
         }

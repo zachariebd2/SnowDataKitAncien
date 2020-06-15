@@ -43,7 +43,6 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_localisation);
-
         // Récupération des ID des TextView
         textLatLong = findViewById(R.id.textLatLong);
         textAccAlt = findViewById(R.id.textPrecision);
@@ -53,17 +52,21 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
+        // Bundle pour stocker les "extras", c'est-à-dire les variables (int, float, String...)
         Bundle extras = getIntent().getExtras();
+        // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
         if (extras != null) {
+            // On re-stocke tout dans de nouvelles variables
             int re_restoredAccuracy = extras.getInt("re_savedAccuracy");
             int re_restoredAltitude = extras.getInt("re_savedAltitude");
             double re_restoredLatitude = extras.getDouble("re_savedLatitude");
             double re_restoredLongitude = extras.getDouble("re_savedLongitude");
+            // Et on affiche cela dans les TextView
             textAccAlt.setText("Précision : " + re_restoredAccuracy + "m");
             textLatLong.setText(getFormattedLocationInDegree(re_restoredLatitude, re_restoredLongitude) + " | Altitude : " + re_restoredAltitude + "m");
-
+            // TODO Restaurer la position GPS
+            getCurrentLocation();
         }
-
 
         // Fonction : Check des permissions au clic du bouton
         findViewById(R.id.buttonGetCurrentPosition).setOnClickListener(new View.OnClickListener() {
