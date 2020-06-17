@@ -2,13 +2,10 @@ package com.example.neige;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,10 +13,10 @@ public class NeigePourcentage extends AppCompatActivity {
 
     private RadioGroup radioGroup;
     private RadioButton radioButton;
-    private TextView textView;
-    private float x1, x2, y1, y2;
+    private float x1, x2;
     private int restoredAccuracy, restoredAltitude;
     private double restoredLatitude, restoredLongitude;
+    private String valInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +24,6 @@ public class NeigePourcentage extends AppCompatActivity {
         setContentView(R.layout.activity_neige_pourcentage);
 
         radioGroup = findViewById(R.id.radioForm);
-        textView = findViewById(R.id.textView_selected);
 
         // Bundle pour stocker les extras
         Bundle extras = getIntent().getExtras();
@@ -36,21 +32,14 @@ public class NeigePourcentage extends AppCompatActivity {
             restoredAccuracy = extras.getInt("savedAccuracy");
             restoredAltitude = extras.getInt("savedAltitude");
             restoredLatitude = extras.getDouble("savedLatitude");
-            restoredLongitude = extras.getDouble("savedLongitude");
-
         }
+    }
 
-        // Bouton confirmer choix : On se contente de modifier le textView pour l'instant
-        Button boutonConfirmer = findViewById(R.id.confirmer);
-        boutonConfirmer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int radioId = radioGroup.getCheckedRadioButtonId();
-                radioButton = findViewById(radioId);
-                textView.setText("Sélection : " + radioButton.getText());
-                Log.i("ID RADIO", "ID du bouton radio choisi : " + radioButton.getId());
-            }
-        });
+    public void check(View v) {
+        int radioId = radioGroup.getCheckedRadioButtonId();
+        radioButton = findViewById(radioId);
+        valInput = radioButton.getText().toString().substring(0, radioButton.getText().toString().length() - 1);
+        // Toast.makeText(this, "Sélection : " + Integer.parseInt(valInput), Toast.LENGTH_SHORT).show();
     }
 
     // Swipe vers l'activité Localisation
@@ -58,11 +47,9 @@ public class NeigePourcentage extends AppCompatActivity {
         switch (touchEvent.getAction()) {
             case MotionEvent.ACTION_DOWN: // Lorsque l'utilisateur clique sur l'écran sur l'écran
                 x1 = touchEvent.getX();
-                y1 = touchEvent.getY();
                 break;
             case MotionEvent.ACTION_UP: // Lorsque l'utilisateur retire son doigt de l'écran
                 x2 = touchEvent.getX();
-                y2 = touchEvent.getY();
                 if (x1 < x2) {
                     Intent i = new Intent(this, Localisation.class);
                     // Données de la localisation
@@ -71,6 +58,15 @@ public class NeigePourcentage extends AppCompatActivity {
                     i.putExtra("re_savedLongitude", restoredLongitude);
                     i.putExtra("re_savedLatitude", restoredLatitude);
                     startActivity(i); // On lance l'activité Localisation
+                } else if (x1 > x2) {
+                    Intent i = new Intent(this, EnvoiFormulaire.class);
+                    // Données de la localisation
+                    i.putExtra("savedAccuracy", restoredAccuracy);
+                    i.putExtra("savedAltitude", restoredAltitude);
+                    i.putExtra("savedLongitude", restoredLongitude);
+                    i.putExtra("savedLatitude", restoredLatitude);
+                    i.putExtra("savedPourcentageNeige", valInput);
+                    startActivity(i);
                 }
                 break;
         }

@@ -37,9 +37,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="34dp"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/confirmer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aidePourcentageDeNeige">
@@ -50,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:checked="true"
+            android:onClick="check"
             android:text="0%"
             android:textSize="20dp" />
 
@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="10%"
             android:textSize="20dp" />
 
@@ -66,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="20%"
             android:textSize="20dp" />
 
@@ -74,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="30%"
             android:textSize="20dp" />
 
@@ -82,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="40%"
             android:textSize="20dp" />
 
@@ -90,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="50%"
             android:textSize="20dp" />
 
@@ -98,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="60%"
             android:textSize="20dp" />
 
@@ -106,6 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="70%"
             android:textSize="20dp" />
 
@@ -114,6 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="80%"
             android:textSize="20dp" />
 
@@ -122,6 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="90%"
             android:textSize="20dp" />
 
@@ -130,40 +139,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="check"
             android:text="100%"
             android:textSize="20dp" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/confirmer"
-        android:layout_width="304dp"
-        android:layout_height="56dp"
-        android:layout_below="@id/textView_selected"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="46dp"
-        android:layout_marginLeft="46dp"
-        android:layout_marginEnd="46dp"
-        android:layout_marginRight="46dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/button_rounded"
-        android:text="Confirmer"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioForm" />
-
-    <TextView
+    <!--<TextView
         android:id="@+id/textView_selected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/radioForm"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="80dp"
         android:text="Sélection : "
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/confirmer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
