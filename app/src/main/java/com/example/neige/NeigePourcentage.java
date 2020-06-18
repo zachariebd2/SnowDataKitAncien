@@ -31,6 +31,7 @@ public class NeigePourcentage extends AppCompatActivity {
             // Stockage des extras dans de nouvelles variables
             restoredAccuracy = extras.getInt("savedAccuracy");
             restoredAltitude = extras.getInt("savedAltitude");
+            restoredLongitude = extras.getDouble("savedLongitude");
             restoredLatitude = extras.getDouble("savedLatitude");
         }
     }
