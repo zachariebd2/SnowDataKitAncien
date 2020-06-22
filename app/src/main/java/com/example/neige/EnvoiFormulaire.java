@@ -17,6 +17,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EnvoiFormulaire extends AppCompatActivity {
     private static final String FILE_NAME = "formulaires.json";
@@ -30,7 +33,6 @@ public class EnvoiFormulaire extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_envoi_formulaire);
 
-
         // Bundle pour stocker les extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -39,8 +41,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
             altitude = extras.getInt("savedAltitude");
             latitude = extras.getDouble("savedLatitude");
             longitude = extras.getDouble("savedLongitude");
-            pourcentageNeige = Integer.parseInt(extras.getString("savedPourcentageNeige"));
-
+            pourcentageNeige = extras.getInt("savedPourcentageNeige");
         }
 
         findViewById(R.id.sauvegarderFormulaire).setOnClickListener(new View.OnClickListener() {
@@ -90,10 +91,9 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return stringBuilder.toString();
     }
 
-    private JSONObject addFormToJson(String jsonStr) throws JSONException {
+    private JSONObject addFormToJson(String jsonStr) throws JSONException, IOException {
         JSONObject objetPrecedent = new JSONObject(jsonStr);
         JSONArray array = objetPrecedent.getJSONArray("formulaires");
-
         JSONObject form = dataJson();
         array.put(form);
         JSONObject objetJsonActuel = new JSONObject();
@@ -101,10 +101,18 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return objetJsonActuel;
     }
 
-    private JSONObject dataJson() throws JSONException {
+    private JSONObject dataJson() throws JSONException, IOException {
+        File file = new File(getFilesDir(), FILE_NAME);
         JSONObject form = new JSONObject();
-        form.put("id", 0);
-        form.put("date", "");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date d = new Date();
+        String date = dateFormat.format(d);
+        if (!file.exists()) {
+            form.put("id", 1);
+        } else {
+            form.put("id", recupererId(lireForm(file)) + 1);
+        }
+        form.put("date", date);
         form.put("latitude", latitude);
         form.put("longitude", longitude);
         form.put("accuracy", accuracy);
@@ -113,7 +121,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return form;
     }
 
-    private JSONObject ajouterForm() throws JSONException {
+    private JSONObject ajouterForm() throws JSONException, IOException {
         JSONObject formWrapper = new JSONObject();
         JSONObject form = dataJson();
         formWrapper.put("formulaires", new JSONArray()
@@ -121,9 +129,15 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return formWrapper;
     }
 
-    private String recupererId(String jsonStr) throws JSONException {
-        JSONObject objetPrecedent = new JSONObject(jsonStr);
-        String id = objetPrecedent.getString("id");
-        return id;
+    private int recupererId(String jsonStr) throws JSONException {
+        JSONObject obj = new JSONObject(jsonStr);
+
+        // Tableau formulaires
+        JSONArray forms = obj.getJSONArray("formulaires");
+
+        // Récupérer le dernier objet
+        JSONObject last_form = forms.getJSONObject(forms.length() - 1);
+
+        return last_form.optInt("id");
     }
 }

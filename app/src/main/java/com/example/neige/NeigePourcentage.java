@@ -14,9 +14,9 @@ public class NeigePourcentage extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private float x1, x2;
-    private int restoredAccuracy, restoredAltitude;
+    private int restoredAccuracy, restoredAltitude, pourcentageNeige;
     private double restoredLatitude, restoredLongitude;
-    private String valInput;
+    private String pourcentageNeigeSplit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,8 @@ public class NeigePourcentage extends AppCompatActivity {
     public void check(View v) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        valInput = radioButton.getText().toString().substring(0, radioButton.getText().toString().length() - 1);
-        // Toast.makeText(this, "Sélection : " + Integer.parseInt(valInput), Toast.LENGTH_SHORT).show();
+        pourcentageNeigeSplit = radioButton.getText().toString().substring(0, radioButton.getText().toString().length() - 1);
+        pourcentageNeige = Integer.parseInt(pourcentageNeigeSplit);
     }
 
     // Swipe vers l'activité Localisation
@@ -66,7 +66,7 @@ public class NeigePourcentage extends AppCompatActivity {
                     i.putExtra("savedAltitude", restoredAltitude);
                     i.putExtra("savedLongitude", restoredLongitude);
                     i.putExtra("savedLatitude", restoredLatitude);
-                    i.putExtra("savedPourcentageNeige", valInput);
+                    i.putExtra("savedPourcentageNeige", pourcentageNeige);
                     startActivity(i);
                 }
                 break;
