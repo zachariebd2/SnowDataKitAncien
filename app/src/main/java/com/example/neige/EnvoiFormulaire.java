@@ -1,8 +1,8 @@
 package com.example.neige;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +26,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private int accuracy, altitude;
     private double latitude, longitude;
     private int pourcentageNeige;
+    private Button boutonSauvegarder;
 
 
     @Override
@@ -43,21 +44,20 @@ public class EnvoiFormulaire extends AppCompatActivity {
             longitude = extras.getDouble("savedLongitude");
             pourcentageNeige = extras.getInt("savedPourcentageNeige");
         }
+        
+        boutonSauvegarder = findViewById(R.id.sauvegarderFormulaire);
 
+        // Clic sur le bouton "Sauvegarder hors-ligne"
         findViewById(R.id.sauvegarderFormulaire).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JSONObject form;
                 try {
                     File file = new File(getFilesDir(), FILE_NAME);
-                    if (!file.exists()) { // Si le fichier n'existe pas
-                        form = ajouterForm();
-                        Log.i("NEW_FORM", "Form sauvegardé.");
-                    } else {
-                        form = addFormToJson(lireForm(file)); // Dans le cas où le fichier existe déjà
-                        Log.i("FORM_UPDATE", "Form sauvegardé.");
-                    }
+                    // Si le fichier n'existe pas, on en crée un, sinon on ajoute l'objet au fichier JSON existant
+                    form = !file.exists() ? ajouterForm() : addFormToJson(lireForm(file));
                     stockerForm(form);
+                    boutonSauvegarder.setEnabled(false); // On désactive le bouton
                     Toast.makeText(EnvoiFormulaire.this, "Le formulaire a été sauvegardé !", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -68,7 +68,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         });
     }
 
-
+    // Écrire le contenu dans le fichier JSON
     private void stockerForm(JSONObject jsonObject) throws IOException {
         String formStr = jsonObject.toString();
         File file = new File(getFilesDir(), FILE_NAME);
@@ -78,6 +78,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         bufferedWriter.close();
     }
 
+    // Lire le contenu du fichier JSON et retourner le résultat dans une chaîne (String)
     private String lireForm(File file) throws IOException {
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -91,6 +92,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return stringBuilder.toString();
     }
 
+    // Ajouter un objet JSON à un fichier existant
     private JSONObject addFormToJson(String jsonStr) throws JSONException, IOException {
         JSONObject objetPrecedent = new JSONObject(jsonStr);
         JSONArray array = objetPrecedent.getJSONArray("formulaires");
@@ -101,26 +103,33 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return objetJsonActuel;
     }
 
+    // Insertion des données dans un objet JSON qui sera retourné
     private JSONObject dataJson() throws JSONException, IOException {
         File file = new File(getFilesDir(), FILE_NAME);
         JSONObject form = new JSONObject();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date d = new Date();
         String date = dateFormat.format(d);
+
+        // Si le fichier n'existe pas
         if (!file.exists()) {
             form.put("id", 1);
         } else {
             form.put("id", recupererId(lireForm(file)) + 1);
         }
+
+        // On insère les données
         form.put("date", date);
         form.put("latitude", latitude);
         form.put("longitude", longitude);
         form.put("accuracy", accuracy);
         form.put("altitude", altitude);
         form.put("pourcentageNeige", pourcentageNeige);
+
         return form;
     }
 
+    // Ajouter un nouveau objet JSON
     private JSONObject ajouterForm() throws JSONException, IOException {
         JSONObject formWrapper = new JSONObject();
         JSONObject form = dataJson();
@@ -129,6 +138,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return formWrapper;
     }
 
+    // Récupérer l'ID du dernier objet dans le fichier "formulaires.json"
     private int recupererId(String jsonStr) throws JSONException {
         JSONObject obj = new JSONObject(jsonStr);
 

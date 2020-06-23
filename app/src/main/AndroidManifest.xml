@@ -16,13 +16,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnvoiFormulaire"></activity>
+        <activity android:name=".ListeFormulaires">
+        </activity>
+        <activity android:name=".EnvoiFormulaire" />
         <activity android:name=".NeigePourcentage" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
-
         <activity android:name=".Localisation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
