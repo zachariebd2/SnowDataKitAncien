@@ -30,6 +30,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private int pourcentageNeige;
     private Button boutonSauvegarder;
     private float x1, x2;
+    private int saved_id_pourcentageNeige;
 
 
     @Override
@@ -46,6 +47,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
             latitude = extras.getDouble("savedLatitude");
             longitude = extras.getDouble("savedLongitude");
             pourcentageNeige = extras.getInt("savedPourcentageNeige");
+            saved_id_pourcentageNeige = extras.getInt("id_input_pourcentageNeige");
         }
 
         boutonSauvegarder = findViewById(R.id.sauvegarderFormulaire);
@@ -159,7 +161,15 @@ public class EnvoiFormulaire extends AppCompatActivity {
                 x2 = touchEvent.getX();
                 if (x1 < x2) {
                     Intent i = new Intent(this, NeigePourcentage.class);
-                    startActivity(i); // On lance l'activité Localisation
+                    // Données à renvoyer
+                    i.putExtra("savedAccuracy", accuracy);
+                    i.putExtra("savedAltitude", altitude);
+                    i.putExtra("savedLongitude", longitude);
+                    i.putExtra("savedLatitude", latitude);
+                    i.putExtra("savedPourcentageNeige", pourcentageNeige);
+                    i.putExtra("saved_id_pourcentageNeige", saved_id_pourcentageNeige);
+
+                    startActivity(i); // On lance l'activité NeigePourcentage
                 }
                 break;
         }

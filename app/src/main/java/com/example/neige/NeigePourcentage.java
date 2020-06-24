@@ -73,6 +73,7 @@ public class NeigePourcentage extends AppCompatActivity {
                     i.putExtra("savedLongitude", restoredLongitude);
                     i.putExtra("savedLatitude", restoredLatitude);
                     i.putExtra("savedPourcentageNeige", pourcentageNeige);
+                    i.putExtra("id_input_pourcentageNeige", radioGroup.getCheckedRadioButtonId());
                     startActivity(i);
                 }
                 break;
