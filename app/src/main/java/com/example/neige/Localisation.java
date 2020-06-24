@@ -38,6 +38,7 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
     private float x1, x2, y1, y2; // Pour le swipe
     private double latitude, longitude; // Données affichées sur l'activité
     private int accuracy, altitude; // Données affichées sur l'activité
+    private int saved_id_pourcentageNeige; // ID de l'input sauvegardé
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +63,11 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
             int re_restoredAltitude = extras.getInt("re_savedAltitude");
             double re_restoredLatitude = extras.getDouble("re_savedLatitude");
             double re_restoredLongitude = extras.getDouble("re_savedLongitude");
+            saved_id_pourcentageNeige = extras.getInt("id_input_pourcentageNeige");
+
             // Et on affiche cela dans les TextView
             textAccAlt.setText("Précision : " + re_restoredAccuracy + "m");
             textLatLong.setText(getFormattedLocationInDegree(re_restoredLatitude, re_restoredLongitude) + " | Altitude : " + re_restoredAltitude + "m");
-            // TODO Restaurer la position GPS
             getCurrentLocation();
         }
 
@@ -93,11 +95,10 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) { // Si le request code est le même que celui du check, et que le résultat du check est supérieur à 0
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) // Si le request code est le même que celui du check, et que le résultat du check est supérieur à 0
             getCurrentLocation();
-        } else {
+        else
             Toast.makeText(this, "Permissions ron-autorisées !", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void getCurrentLocation() {
@@ -108,9 +109,8 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         // Check des permissions
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-        }
 
         LocationServices.getFusedLocationProviderClient(Localisation.this)
                 .requestLocationUpdates(locationRequest, new LocationCallback() {
@@ -177,15 +177,11 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
 
         map = googleMap;
         try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
                             this, R.raw.mapstyle)); // Style contenu dans le dossier raw > mapstyle en format JSON
 
-            if (!success) {
-                Log.e("Localisation", "Style parsing failed.");
-            }
+            if (!success) Log.e("Localisation", "Style parsing failed.");
         } catch (Resources.NotFoundException e) {
             Log.e("Localisation", "Can't find style. Error: ", e);
         }
@@ -210,6 +206,7 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
                     i.putExtra("savedLongitude", longitude);
                     i.putExtra("savedAccuracy", accuracy);
                     i.putExtra("savedAltitude", altitude);
+                    i.putExtra("saved_id_pourcentageNeige", saved_id_pourcentageNeige);
                     startActivity(i);
                 }
                 break;

@@ -63,7 +63,7 @@ public class Formulaire {
     }
 
     public String toString() {
-        return "[" + this.getDate() + "] " + " Lat : " + this.getLatitude() + " | Long : " + this.getLongitude() + "\n"
+        return "[" + this.getDate() + "] " + " Lat/Lng : (" + this.getLatitude() + ", )" + this.getLongitude() + "\n"
                 + "Pourcentage de neige : " + this.getPourcentageNeige();
     }
 }

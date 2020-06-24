@@ -57,7 +57,6 @@ public class ListeFormulaires extends AppCompatActivity {
                     String date = form.getString("date");
                     Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige);
                     arrayList.add(formulaire.toString());
-
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

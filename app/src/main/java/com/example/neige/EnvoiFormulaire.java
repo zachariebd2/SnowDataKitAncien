@@ -1,6 +1,8 @@
 package com.example.neige;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private double latitude, longitude;
     private int pourcentageNeige;
     private Button boutonSauvegarder;
+    private float x1, x2;
 
 
     @Override
@@ -44,7 +47,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
             longitude = extras.getDouble("savedLongitude");
             pourcentageNeige = extras.getInt("savedPourcentageNeige");
         }
-        
+
         boutonSauvegarder = findViewById(R.id.sauvegarderFormulaire);
 
         // Clic sur le bouton "Sauvegarder hors-ligne"
@@ -111,12 +114,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         Date d = new Date();
         String date = dateFormat.format(d);
 
-        // Si le fichier n'existe pas
-        if (!file.exists()) {
-            form.put("id", 1);
-        } else {
-            form.put("id", recupererId(lireForm(file)) + 1);
-        }
+        form.put("id", !file.exists() ? 1 : recupererId(lireForm(file)) + 1);
 
         // On insère les données
         form.put("date", date);
@@ -149,5 +147,22 @@ public class EnvoiFormulaire extends AppCompatActivity {
         JSONObject last_form = forms.getJSONObject(forms.length() - 1);
 
         return last_form.optInt("id");
+    }
+
+    // Swipe vers la gauche ou vers la droite
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        switch (touchEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN: // Lorsque l'utilisateur clique sur l'écran sur l'écran
+                x1 = touchEvent.getX();
+                break;
+            case MotionEvent.ACTION_UP: // Lorsque l'utilisateur retire son doigt de l'écran
+                x2 = touchEvent.getX();
+                if (x1 < x2) {
+                    Intent i = new Intent(this, NeigePourcentage.class);
+                    startActivity(i); // On lance l'activité Localisation
+                }
+                break;
+        }
+        return false;
     }
 }
