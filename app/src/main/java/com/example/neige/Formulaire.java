@@ -38,30 +38,6 @@ public class Formulaire {
         return this.pourcentageNeige;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setAccuracy(int accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public void setAltitude(int altitude) {
-        this.altitude = altitude;
-    }
-
-    public void setPourcentageNeige(int pourcentageNeige) {
-        this.pourcentageNeige = pourcentageNeige;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     @Override
     public String toString() {
         return "[" + this.getDate() + "] " + " Lat/Lng : (" + this.getLatitude() + ", " + this.getLongitude() + ")\n"

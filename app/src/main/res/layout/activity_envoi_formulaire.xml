@@ -8,31 +8,55 @@
 
     <Button
         android:id="@+id/envoyerFormulaire"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginLeft="46dp"
         android:layout_marginTop="326dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginRight="46dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/button_rounded"
         android:text="Envoyer"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/sauvegarderFormulaire"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/sauvegarderFormulaire"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="239dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginBottom="13dp"
         android:background="@drawable/button_rounded_grey"
         android:text="Sauvegarder hors-ligne"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/listeForms"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/envoyerFormulaire" />
+
+    <Button
+        android:id="@+id/listeForms"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginBottom="166dp"
+        android:background="@drawable/button_rounded_grey"
+        android:text="Liste formulaires (DEBUG)"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sauvegarderFormulaire" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

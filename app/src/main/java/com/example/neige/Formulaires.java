@@ -1,9 +1,9 @@
 package com.example.neige;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,21 +19,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ListeFormulaires extends AppCompatActivity {
-
-    // Initialisation des variables
-    private ListView liste_forms;
-    ArrayList<String> arrayList = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter;
+public class Formulaires extends AppCompatActivity {
+    private static final String TAG = "Formulaires";
+    ArrayList<Formulaire> arrayList = new ArrayList<>();
+    FormListAdapter arrayAdapter;
     String FILE_NAME = "formulaires.json";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_liste_formulaires);
-
-        // Initialisation des variables
-        liste_forms = findViewById(R.id.liste_formulaires);
+        setContentView(R.layout.activity_formulaires);
+        Log.d(TAG, "onCreate: Started.");
+        ListView liste_forms = (ListView) findViewById(R.id.liste_formulaires);
 
         // Initialisation du JSON
         File f = new File(getFilesDir(), FILE_NAME);
@@ -56,14 +54,14 @@ public class ListeFormulaires extends AppCompatActivity {
                     int altitude = form.getInt("altitude");
                     String date = form.getString("date");
                     Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige);
-                    arrayList.add(formulaire.toString());
+                    arrayList.add(formulaire);
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
 
             // Initialisation de l'Array Adapter
-            arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
+            arrayAdapter = new FormListAdapter(this, R.layout.adapter_view_layout, arrayList);
 
             // Lier l'Array Adapter à la ListView
             liste_forms.setAdapter(arrayAdapter);
@@ -72,7 +70,7 @@ public class ListeFormulaires extends AppCompatActivity {
             liste_forms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(ListeFormulaires.this, arrayList.get(position), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Formulaires.this, arrayList.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

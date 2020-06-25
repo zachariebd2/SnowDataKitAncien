@@ -31,6 +31,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private Button boutonSauvegarder;
     private float x1, x2;
     private int saved_id_pourcentageNeige;
+    private Button boutonListeForms;
 
 
     @Override
@@ -51,6 +52,17 @@ public class EnvoiFormulaire extends AppCompatActivity {
         }
 
         boutonSauvegarder = findViewById(R.id.sauvegarderFormulaire);
+
+        boutonListeForms = findViewById(R.id.listeForms);
+
+        // Clic sur le bouton "Liste formulaires"
+        findViewById(R.id.listeForms).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EnvoiFormulaire.this, Formulaires.class);
+                startActivity(i);
+            }
+        });
 
         // Clic sur le bouton "Sauvegarder hors-ligne"
         findViewById(R.id.sauvegarderFormulaire).setOnClickListener(new View.OnClickListener() {
@@ -112,6 +124,8 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private JSONObject dataJson() throws JSONException, IOException {
         File file = new File(getFilesDir(), FILE_NAME);
         JSONObject form = new JSONObject();
+
+        // Date
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date d = new Date();
         String date = dateFormat.format(d);
