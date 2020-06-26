@@ -1,5 +1,6 @@
 package com.example.neige;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -8,6 +9,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +31,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnvoiFormulaire extends AppCompatActivity {
     private static final String FILE_NAME = "formulaires.json";
@@ -81,6 +92,18 @@ public class EnvoiFormulaire extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        // Bouton pour envoyer les données dans la BD
+        Button boutonEnvoyer = findViewById(R.id.envoyerFormulaire);
+        boutonEnvoyer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertData();
+
+                // Test clic
+                // Toast.makeText(EnvoiFormulaire.this, "Clic envoyer !", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -187,4 +210,45 @@ public class EnvoiFormulaire extends AppCompatActivity {
         }
         return false;
     }
+
+    // Insérer les données dans la base de données
+    // Utilisation de la libraire Volley
+    private void insertData() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Chargement en cours...");
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://odkneige.000webhostapp.com/insert.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equalsIgnoreCase("OK")) {
+                            Toast.makeText(EnvoiFormulaire.this, "Formulaire envoyé !", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        } else {
+                            Toast.makeText(EnvoiFormulaire.this, "Erreur, veuillez recommencer...", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(EnvoiFormulaire.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, Double> params = new HashMap<>();
+                params.put("latitude", latitude);
+                params.put("longitude", longitude);
+
+                return super.getParams();
+            }
+        };
+
+        RequestQueue rQ = Volley.newRequestQueue(EnvoiFormulaire.this);
+        rQ.add(request);
+    }
+
+
 }
