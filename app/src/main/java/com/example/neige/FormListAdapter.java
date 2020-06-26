@@ -41,9 +41,9 @@ public class FormListAdapter extends ArrayAdapter<Formulaire> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-        TextView tvDate = (TextView) convertView.findViewById(R.id.textDate);
-        TextView tvLatLng = (TextView) convertView.findViewById(R.id.textLatLong);
-        TextView tvPourcentageNeige = (TextView) convertView.findViewById(R.id.textPourcentageDeNeige);
+        TextView tvDate = convertView.findViewById(R.id.textDate);
+        TextView tvLatLng = convertView.findViewById(R.id.textLatLong);
+        TextView tvPourcentageNeige = convertView.findViewById(R.id.textPourcentageDeNeige);
 
         tvDate.setText(date);
         tvLatLng.setText("Lat/Lng : " + latitude + ", " + longitude);

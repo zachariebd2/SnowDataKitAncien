@@ -124,8 +124,6 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private JSONObject dataJson() throws JSONException, IOException {
         File file = new File(getFilesDir(), FILE_NAME);
         JSONObject form = new JSONObject();
-
-        // Date
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date d = new Date();
         String date = dateFormat.format(d);

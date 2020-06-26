@@ -31,7 +31,7 @@ public class Formulaires extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulaires);
         Log.d(TAG, "onCreate: Started.");
-        ListView liste_forms = (ListView) findViewById(R.id.liste_formulaires);
+        ListView liste_forms = findViewById(R.id.liste_formulaires);
 
         // Initialisation du JSON
         File f = new File(getFilesDir(), FILE_NAME);
