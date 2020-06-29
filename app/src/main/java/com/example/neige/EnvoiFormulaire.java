@@ -245,7 +245,6 @@ public class EnvoiFormulaire extends AppCompatActivity {
                 return super.getParams();
             }
         };
-
         RequestQueue rQ = Volley.newRequestQueue(EnvoiFormulaire.this);
         rQ.add(request);
     }
