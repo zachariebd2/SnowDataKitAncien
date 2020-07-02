@@ -3,4 +3,12 @@
     <string name="get_current_position">Position actuelle</string>
     <string name="titrePourcentageDeNeige">Pourcentage de neige</string>
     <string name="aidePourcentageDeNeige">Pourcentage de neige dans un cercle de rayon 10m.</string>
+    <string name="login">Connexion</string>
+    <string name="register">Inscription</string>
+    <string name="password2">Confirmation du mot de passe</string>
+    <string name="password">Mot de passe</string>
+    <string name="email">Email</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="register_titre">Inscription</string>
+    <string name="login_titre">Connexion</string>
 </resources>

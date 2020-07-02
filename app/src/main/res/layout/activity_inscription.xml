@@ -1,196 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
     tools:context=".Inscription">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/connexion_background"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/circleImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:text="@string/register_titre"
+        android:textSize="20sp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pseudo_register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/et_pseudo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pseudo"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:singleLine="true" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.github.captain_miao.optroundcardview.OptRoundCardView
-        android:id="@+id/optRoundCardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/circleImageView"
-        app:optRoundCardBackgroundColor="#485C4A"
-        app:optRoundCardCornerRadius="50dp"
-        app:optRoundCardElevation="0dp"
-        app:optRoundCardLeftBottomCorner="true"
-        app:optRoundCardLeftTopCorner="true"
-        app:optRoundCardRightBottomCorner="true"
-        app:optRoundCardRightTopCorner="true">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email_register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:orientation="vertical">
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Inscription"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="45sp"
-                android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/nom_utilisateur_inscription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
-                android:background="@android:color/transparent"
-                android:hint="Nom d'utilisateur"
-                android:maxLength="20"
-                android:padding="15dp"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"
-                android:textStyle="bold" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password_register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:background="#FFFFFF" />
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/mdp_inscription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
-                android:background="@android:color/transparent"
-                android:hint="Mot de passe"
-                android:inputType="textPassword"
-                android:maxLength="50"
-                android:padding="15dp"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"
-                android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:background="#FFFFFF" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password2_register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/mdpVerif_inscription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
-                android:background="@android:color/transparent"
-                android:hint="Confirmation du mot de passe"
-                android:inputType="textPassword"
-                android:maxLength="50"
-                android:padding="15dp"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"
-                android:textStyle="bold" />
+        <EditText
+            android:id="@+id/et_password2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password2"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:singleLine="true" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:background="#FFFFFF" />
-
-            <Button
-                android:id="@+id/boutonInscription"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/button_rounded"
-                android:text="Inscription"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-    </com.github.captain_miao.optroundcardview.OptRoundCardView>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="142dp"
-        android:layout_marginLeft="142dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginRight="142dp"
-        android:layout_marginBottom="597dp"
-        android:elevation="0dp"
-        android:src="@drawable/user_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/optRoundCardView"
-        app:layout_constraintStart_toStartOf="@+id/retourVersConnexion"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/retourVersConnexion"
-        android:layout_width="125dp"
-        android:layout_height="40dp"
+        android:id="@+id/btn_send_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="@string/register" />
+
+    <ProgressBar
+        android:id="@+id/pb_loader_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="250dp"
-        android:layout_marginRight="250dp"
-        android:background="@drawable/button_rounded"
-        android:text="Retour"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:visibility="invisible" />
+
+</LinearLayout>

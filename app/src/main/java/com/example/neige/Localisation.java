@@ -39,6 +39,7 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
     private double latitude, longitude; // Données affichées sur l'activité
     private int accuracy, altitude; // Données affichées sur l'activité
     private int saved_id_pourcentageNeige; // ID de l'input sauvegardé
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,13 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
         // Récupération des ID des TextView
         textLatLong = findViewById(R.id.textLatLong);
         textAccAlt = findViewById(R.id.textPrecision);
+        sessionManager = new SessionManager(this);
+
+        // Si l'utilisateur est loggé, on récupère les informations
+        if (sessionManager.isLogged()) {
+            String pseudo = sessionManager.getPseudo();
+            String id = sessionManager.getId();
+        }
 
         // Instantation de la carte Google
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
