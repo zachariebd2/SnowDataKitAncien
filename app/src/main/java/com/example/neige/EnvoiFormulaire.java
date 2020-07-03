@@ -64,17 +64,6 @@ public class EnvoiFormulaire extends AppCompatActivity {
 
         boutonSauvegarder = findViewById(R.id.sauvegarderFormulaire);
 
-        boutonListeForms = findViewById(R.id.listeForms);
-
-        // Clic sur le bouton "Liste formulaires"
-        findViewById(R.id.listeForms).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EnvoiFormulaire.this, Formulaires.class);
-                startActivity(i);
-            }
-        });
-
         // Clic sur le bouton "Sauvegarder hors-ligne"
         findViewById(R.id.sauvegarderFormulaire).setOnClickListener(new View.OnClickListener() {
             @Override

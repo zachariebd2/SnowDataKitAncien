@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ApresConnexion"></activity>
         <activity android:name=".Accueil">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,8 +26,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Inscription" />
-        <activity android:name=".Connexion"></activity>
+        <activity android:name=".Connexion" />
         <activity android:name=".Formulaires">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

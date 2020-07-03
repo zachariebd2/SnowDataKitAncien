@@ -4,14 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EnvoiFormulaire">
+    tools:context=".ApresConnexion">
 
     <Button
-        android:id="@+id/envoyerFormulaire"
-        android:layout_width="300dp"
+        android:id="@+id/btn_deconnexion"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_rounded"
-        android:text="Envoyer"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/button_rounded_grey"
+        android:text="Déconnexion"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_nouveauformulaire"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:background="@drawable/button_rounded_grey"
+        android:text="Saisir un nouveau formulaire"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,15 +32,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/sauvegarderFormulaire"
+        android:id="@+id/btn_listeformulaires"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_rounded_grey"
-        android:text="Sauvegarder hors-ligne"
+        android:text="Formulaires sauvegardés"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/envoyerFormulaire" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_nouveauformulaire" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

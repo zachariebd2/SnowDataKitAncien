@@ -1,7 +1,9 @@
 package com.example.neige;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,6 +26,7 @@ public class Formulaires extends AppCompatActivity {
     ArrayList<Formulaire> arrayList = new ArrayList<>();
     FormListAdapter arrayAdapter;
     String FILE_NAME = "formulaires.json";
+    private float x1, x2;
 
 
     @Override
@@ -88,5 +91,25 @@ public class Formulaires extends AppCompatActivity {
         }
         bufferedReader.close();
         return stringBuilder.toString();
+    }
+
+    // Méthode pour Swipe vers la suite du formulaire
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        switch (touchEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+
+                // Swipe vers la gauche
+                if (x1 > x2) {
+                    // Envoi des données vers l'activité ApresConnexion
+                    Intent i = new Intent(this, ApresConnexion.class);
+                    startActivity(i);
+                }
+                break;
+        }
+        return false;
     }
 }

@@ -51,11 +51,13 @@
 
     <Button
         android:id="@+id/btn_send_login"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="@string/login" />
+        android:text="@string/login"
+        android:background="@drawable/button_rounded"
+        android:textColor="@android:color/white" />
 
     <ProgressBar
         android:id="@+id/pb_loader_login"

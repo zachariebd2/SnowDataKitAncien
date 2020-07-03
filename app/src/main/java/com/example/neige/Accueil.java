@@ -20,8 +20,9 @@ public class Accueil extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         btn_register = findViewById(R.id.btn_register);
         sessionManager = new SessionManager(this);
+
         if (sessionManager.isLogged()) {
-            Intent i = new Intent(getApplicationContext(), Localisation.class);
+            Intent i = new Intent(getApplicationContext(), ApresConnexion.class);
             startActivity(i);
             finish();
         }
@@ -43,6 +44,5 @@ public class Accueil extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
 }

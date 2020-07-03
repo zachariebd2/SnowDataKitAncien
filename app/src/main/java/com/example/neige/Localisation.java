@@ -39,7 +39,6 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
     private double latitude, longitude; // Données affichées sur l'activité
     private int accuracy, altitude; // Données affichées sur l'activité
     private int saved_id_pourcentageNeige; // ID de l'input sauvegardé
-    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +48,6 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
         // Récupération des ID des TextView
         textLatLong = findViewById(R.id.textLatLong);
         textAccAlt = findViewById(R.id.textPrecision);
-        sessionManager = new SessionManager(this);
-
-        // Si l'utilisateur est loggé, on récupère les informations
-        if (sessionManager.isLogged()) {
-            String pseudo = sessionManager.getPseudo();
-            String id = sessionManager.getId();
-        }
 
         // Instantation de la carte Google
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -189,9 +181,9 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
                     MapStyleOptions.loadRawResourceStyle(
                             this, R.raw.mapstyle)); // Style contenu dans le dossier raw > mapstyle en format JSON
 
-            if (!success) Log.e("Localisation", "Style parsing failed.");
+            if (!success) Log.e("Localisation", "Parse du fichier JSON contenant le style échoué.");
         } catch (Resources.NotFoundException e) {
-            Log.e("Localisation", "Can't find style. Error: ", e);
+            Log.e("Localisation", "L'application ne trouve pas le fichier de style. Erreur : ", e);
         }
     }
 
@@ -215,6 +207,9 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
                     i.putExtra("savedAccuracy", accuracy);
                     i.putExtra("savedAltitude", altitude);
                     i.putExtra("saved_id_pourcentageNeige", saved_id_pourcentageNeige);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(this, ApresConnexion.class);
                     startActivity(i);
                 }
                 break;
