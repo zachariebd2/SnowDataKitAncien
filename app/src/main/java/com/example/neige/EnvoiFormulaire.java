@@ -1,8 +1,8 @@
 package com.example.neige;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -10,13 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.neige.myrequest.MyRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +26,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class EnvoiFormulaire extends AppCompatActivity {
@@ -42,7 +36,8 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private Button boutonSauvegarder;
     private float x1, x2;
     private int saved_id_pourcentageNeige;
-    private Button boutonListeForms;
+    private RequestQueue queue;
+    private MyRequest request;
 
 
     @Override
@@ -61,6 +56,10 @@ public class EnvoiFormulaire extends AppCompatActivity {
             pourcentageNeige = extras.getInt("savedPourcentageNeige");
             saved_id_pourcentageNeige = extras.getInt("id_input_pourcentageNeige");
         }
+
+        // Instanciation de la requête Volley via la classe VolleySingleton (Google)
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        request = new MyRequest(this, queue);
 
         boutonSauvegarder = findViewById(R.id.sauvegarderFormulaire);
 
@@ -84,15 +83,34 @@ public class EnvoiFormulaire extends AppCompatActivity {
             }
         });
 
+        // Création du formulaire
+        // On récupère la date du jour
+        String date = getDateDuJour();
+        final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige);
+
         // Bouton pour envoyer les données dans la BD
         Button boutonEnvoyer = findViewById(R.id.envoyerFormulaire);
         boutonEnvoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertData();
+                request.insertionFormulaire(formulaire, new MyRequest.InsertionFormCallback() {
+                    @Override
+                    public void onSuccess(String message) {
+                        Toast.makeText(EnvoiFormulaire.this, message, Toast.LENGTH_SHORT).show();
+                    }
 
-                // Test clic
-                // Toast.makeText(EnvoiFormulaire.this, "Clic envoyer !", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void inputErrors(Map<String, String> errors) {
+                        if (errors.get("req") != null) {
+                            Toast.makeText(EnvoiFormulaire.this, errors.get("req"), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        Toast.makeText(EnvoiFormulaire.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
@@ -136,9 +154,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private JSONObject dataJson() throws JSONException, IOException {
         File file = new File(getFilesDir(), FILE_NAME);
         JSONObject form = new JSONObject();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date d = new Date();
-        String date = dateFormat.format(d);
+        String date = getDateDuJour();
 
         form.put("id", !file.exists() ? 1 : recupererId(lireForm(file)) + 1);
 
@@ -151,6 +167,12 @@ public class EnvoiFormulaire extends AppCompatActivity {
         form.put("pourcentageNeige", pourcentageNeige);
 
         return form;
+    }
+
+    private String getDateDuJour() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = new Date();
+        return dateFormat.format(d);
     }
 
     // Ajouter un nouveau objet JSON
@@ -199,44 +221,4 @@ public class EnvoiFormulaire extends AppCompatActivity {
         }
         return false;
     }
-
-    // Insérer les données dans la base de données
-    // Utilisation de la libraire Volley
-    private void insertData() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Chargement en cours...");
-
-        StringRequest request = new StringRequest(Request.Method.POST, "https://odkneige.000webhostapp.com/insert.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.equalsIgnoreCase("OK")) {
-                            Toast.makeText(EnvoiFormulaire.this, "Formulaire envoyé !", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        } else {
-                            Toast.makeText(EnvoiFormulaire.this, "Erreur, veuillez recommencer...", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(EnvoiFormulaire.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, Double> params = new HashMap<>();
-                params.put("latitude", latitude);
-                params.put("longitude", longitude);
-
-                return super.getParams();
-            }
-        };
-        RequestQueue rQ = Volley.newRequestQueue(EnvoiFormulaire.this);
-        rQ.add(request);
-    }
-
-
 }
