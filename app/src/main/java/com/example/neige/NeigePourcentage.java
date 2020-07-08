@@ -16,8 +16,8 @@ public class NeigePourcentage extends AppCompatActivity {
     private float x1, x2;
     private int restoredAccuracy, restoredAltitude, pourcentageNeige;
     private double restoredLatitude, restoredLongitude;
-    private String pourcentageNeigeSplit;
-    private int restoredIdPourcentageNeige;
+    private String pseudo;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,9 @@ public class NeigePourcentage extends AppCompatActivity {
             restoredAltitude = extras.getInt("savedAltitude");
             restoredLongitude = extras.getDouble("savedLongitude");
             restoredLatitude = extras.getDouble("savedLatitude");
-            restoredIdPourcentageNeige = extras.getInt("saved_id_pourcentageNeige");
+            int restoredIdPourcentageNeige = extras.getInt("saved_id_pourcentageNeige");
+            pseudo = extras.getString("pseudo");
+            id = extras.getString("id");
 
             // Restauration de l'input radio choisi
             radioGroup.check(restoredIdPourcentageNeige);
@@ -44,7 +46,7 @@ public class NeigePourcentage extends AppCompatActivity {
     public void check(View v) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        pourcentageNeigeSplit = radioButton.getText().toString().substring(0, radioButton.getText().toString().length() - 1);
+        String pourcentageNeigeSplit = radioButton.getText().toString().substring(0, radioButton.getText().toString().length() - 1);
         pourcentageNeige = Integer.parseInt(pourcentageNeigeSplit);
     }
 
@@ -74,6 +76,8 @@ public class NeigePourcentage extends AppCompatActivity {
                     i.putExtra("savedLatitude", restoredLatitude);
                     i.putExtra("savedPourcentageNeige", pourcentageNeige);
                     i.putExtra("id_input_pourcentageNeige", radioGroup.getCheckedRadioButtonId());
+                    i.putExtra("pseudo", pseudo);
+                    i.putExtra("id", id);
                     startActivity(i);
                 }
                 break;

@@ -11,6 +11,7 @@ public class ApresConnexion extends AppCompatActivity {
 
     private SessionManager sessionManager;
     private Button btn_listeformulaires, btn_nouveauformulaire, btn_deconnexion;
+    private String pseudo, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +19,14 @@ public class ApresConnexion extends AppCompatActivity {
         setContentView(R.layout.activity_apres_connexion);
 
         sessionManager = new SessionManager(this);
-        btn_listeformulaires = (Button) findViewById(R.id.btn_listeformulaires);
-        btn_nouveauformulaire = (Button) findViewById(R.id.btn_nouveauformulaire);
-        btn_deconnexion = (Button) findViewById(R.id.btn_deconnexion);
+        btn_listeformulaires = findViewById(R.id.btn_listeformulaires);
+        btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
+        btn_deconnexion = findViewById(R.id.btn_deconnexion);
 
         // Si l'utilisateur est loggé, on récupère les informations
         if (sessionManager.isLogged()) {
-            String pseudo = sessionManager.getPseudo();
-            String id = sessionManager.getId();
+            pseudo = sessionManager.getPseudo();
+            id = sessionManager.getId();
         }
 
         // Ouvrir la liste de formulaires
@@ -42,6 +43,8 @@ public class ApresConnexion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Localisation.class);
+                i.putExtra("pseudo", pseudo);
+                i.putExtra("id", id);
                 startActivity(i);
             }
         });

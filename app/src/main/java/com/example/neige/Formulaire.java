@@ -4,14 +4,16 @@ public class Formulaire {
     private double latitude, longitude;
     private int accuracy, altitude, pourcentageNeige;
     private String date;
+    private int id_user;
 
-    public Formulaire(String date, double latitude, double longitude, int accuracy, int altitude, int pourcentageNeige) {
+    public Formulaire(String date, double latitude, double longitude, int accuracy, int altitude, int pourcentageNeige, int id_user) {
         this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
         this.accuracy = accuracy;
         this.altitude = altitude;
         this.pourcentageNeige = pourcentageNeige;
+        this.id_user = id_user;
     }
 
     public String getDate() {
@@ -36,6 +38,10 @@ public class Formulaire {
 
     public int getPourcentageNeige() {
         return this.pourcentageNeige;
+    }
+
+    public int getIdUser() {
+        return this.id_user;
     }
 
     @Override

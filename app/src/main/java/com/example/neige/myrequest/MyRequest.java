@@ -179,6 +179,7 @@ public class MyRequest {
                 map.put("altitude", formulaire.getAltitude() + "");
                 map.put("pourcentageNeige", formulaire.getPourcentageNeige() + "");
                 map.put("date", formulaire.getDate());
+                map.put("id_user", formulaire.getIdUser() + "");
                 return map;
             }
         };

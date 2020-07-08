@@ -2,7 +2,6 @@ package com.example.neige;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +37,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private int saved_id_pourcentageNeige;
     private RequestQueue queue;
     private MyRequest request;
+    private String pseudo, id;
 
 
     @Override
@@ -55,6 +55,8 @@ public class EnvoiFormulaire extends AppCompatActivity {
             longitude = extras.getDouble("savedLongitude");
             pourcentageNeige = extras.getInt("savedPourcentageNeige");
             saved_id_pourcentageNeige = extras.getInt("id_input_pourcentageNeige");
+            pseudo = extras.getString("pseudo");
+            id = extras.getString("id");
         }
 
         // Instanciation de la requête Volley via la classe VolleySingleton (Google)
@@ -86,7 +88,9 @@ public class EnvoiFormulaire extends AppCompatActivity {
         // Création du formulaire
         // On récupère la date du jour
         String date = getDateDuJour();
-        final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige);
+        // On convertir l'ID en int
+        int idInt = Integer.parseInt(id);
+        final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, idInt);
 
         // Bouton pour envoyer les données dans la BD
         Button boutonEnvoyer = findViewById(R.id.envoyerFormulaire);
@@ -159,6 +163,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         form.put("id", !file.exists() ? 1 : recupererId(lireForm(file)) + 1);
 
         // On insère les données
+        form.put("pseudo", pseudo);
         form.put("date", date);
         form.put("latitude", latitude);
         form.put("longitude", longitude);
@@ -175,7 +180,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         return dateFormat.format(d);
     }
 
-    // Ajouter un nouveau objet JSON
+    // Ajouter un nouvel objet JSON
     private JSONObject ajouterForm() throws JSONException, IOException {
         JSONObject formWrapper = new JSONObject();
         JSONObject form = dataJson();

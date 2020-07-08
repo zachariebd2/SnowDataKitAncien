@@ -39,6 +39,7 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
     private double latitude, longitude; // Données affichées sur l'activité
     private int accuracy, altitude; // Données affichées sur l'activité
     private int saved_id_pourcentageNeige; // ID de l'input sauvegardé
+    private String pseudo, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
             double re_restoredLatitude = extras.getDouble("re_savedLatitude");
             double re_restoredLongitude = extras.getDouble("re_savedLongitude");
             saved_id_pourcentageNeige = extras.getInt("id_input_pourcentageNeige");
+            pseudo = extras.getString("pseudo");
+            id = extras.getString("id");
 
             // Et on affiche cela dans les TextView
             textAccAlt.setText("Précision : " + re_restoredAccuracy + "m");
@@ -207,6 +210,8 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
                     i.putExtra("savedAccuracy", accuracy);
                     i.putExtra("savedAltitude", altitude);
                     i.putExtra("saved_id_pourcentageNeige", saved_id_pourcentageNeige);
+                    i.putExtra("pseudo", pseudo);
+                    i.putExtra("id", id);
                     startActivity(i);
                 } else {
                     Intent i = new Intent(this, ApresConnexion.class);

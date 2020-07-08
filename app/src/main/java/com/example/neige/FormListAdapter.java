@@ -34,9 +34,10 @@ public class FormListAdapter extends ArrayAdapter<Formulaire> {
         int pourcentageNeige = getItem(position).getPourcentageNeige();
         int accuracy = getItem(position).getAccurracy();
         int altitude = getItem(position).getAltitude();
+        int id_user = getItem(position).getIdUser();
 
         // Créer l'objet formulaire avec les infos
-        Formulaire form = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige);
+        Formulaire form = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
