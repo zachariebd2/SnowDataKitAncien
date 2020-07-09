@@ -214,7 +214,7 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
                     i.putExtra("id", id);
                     startActivity(i);
                 } else {
-                    Intent i = new Intent(this, ApresConnexion.class);
+                    Intent i = new Intent(this, Accueil.class);
                     startActivity(i);
                 }
                 break;

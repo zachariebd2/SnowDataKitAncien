@@ -9,39 +9,54 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Accueil extends AppCompatActivity {
 
-    private Button btn_login, btn_register;
     private SessionManager sessionManager;
+    private Button btn_listeformulaires, btn_nouveauformulaire, btn_deconnexion;
+    private String pseudo, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accueil);
+        setContentView(R.layout.activity_apres_connexion);
 
-        btn_login = findViewById(R.id.btn_login);
-        btn_register = findViewById(R.id.btn_register);
         sessionManager = new SessionManager(this);
+        btn_listeformulaires = findViewById(R.id.btn_listeformulaires);
+        btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
+        btn_deconnexion = findViewById(R.id.btn_deconnexion);
 
+        // Si l'utilisateur est loggé, on récupère les informations
         if (sessionManager.isLogged()) {
-            Intent i = new Intent(getApplicationContext(), ApresConnexion.class);
-            startActivity(i);
-            finish();
+            pseudo = sessionManager.getPseudo();
+            id = sessionManager.getId();
         }
 
-        // Bouton "Se connecter"
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        // Ouvrir la liste de formulaires
+        btn_listeformulaires.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Connexion.class);
+                Intent i = new Intent(getApplicationContext(), Formulaires.class);
                 startActivity(i);
             }
         });
 
-        // Bouton "S'inscrire"
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        // Ouvrir la fenêtre de localisation afin de saisir un nouveau formulaire
+        btn_nouveauformulaire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Inscription.class);
+                Intent i = new Intent(getApplicationContext(), Localisation.class);
+                i.putExtra("pseudo", pseudo);
+                i.putExtra("id", id);
                 startActivity(i);
+            }
+        });
+
+        // Déconnecter l'utilisateur lorsqu'il clique sur le bouton "Déconnexion"
+        btn_deconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionManager.logout();
+                Intent i = new Intent(getApplicationContext(), Bienvenue.class);
+                startActivity(i);
+                finish();
             }
         });
     }

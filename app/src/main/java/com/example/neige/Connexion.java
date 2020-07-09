@@ -54,7 +54,7 @@ public class Connexion extends AppCompatActivity {
                                 public void onSuccess(String id, String pseudo) {
                                     pb_loader_login.setVisibility(View.GONE);
                                     sessionManager.insertUser(id, pseudo);
-                                    Intent i = new Intent(getApplicationContext(), ApresConnexion.class);
+                                    Intent i = new Intent(getApplicationContext(), Accueil.class);
                                     startActivity(i);
                                     finish();
                                 }

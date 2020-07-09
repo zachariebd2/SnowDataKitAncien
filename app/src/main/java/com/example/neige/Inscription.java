@@ -51,7 +51,7 @@ public class Inscription extends AppCompatActivity {
                         @Override
                         public void onSuccess(String message) {
                             pb_loader.setVisibility(View.GONE);
-                            Intent i = new Intent(getApplicationContext(), Accueil.class);
+                            Intent i = new Intent(getApplicationContext(), Bienvenue.class);
                             i.putExtra("REGISTER", message);
                             startActivity(i);
                             finish();

@@ -163,6 +163,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         form.put("id", !file.exists() ? 1 : recupererId(lireForm(file)) + 1);
 
         // On insère les données
+        form.put("id_user", id);
         form.put("pseudo", pseudo);
         form.put("date", date);
         form.put("latitude", latitude);

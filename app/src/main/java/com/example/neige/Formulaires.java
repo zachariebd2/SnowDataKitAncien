@@ -105,7 +105,7 @@ public class Formulaires extends AppCompatActivity {
                 // Swipe vers la gauche
                 if (x1 > x2) {
                     // Envoi des données vers l'activité ApresConnexion
-                    Intent i = new Intent(this, ApresConnexion.class);
+                    Intent i = new Intent(this, Accueil.class);
                     startActivity(i);
                 }
                 break;
