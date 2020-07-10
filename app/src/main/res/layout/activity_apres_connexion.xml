@@ -23,6 +23,10 @@
         android:id="@+id/btn_nouveauformulaire"
         android:layout_width="300dp"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/button_rounded"
         android:text="Saisir un nouveau formulaire"
         android:textColor="@android:color/white"
@@ -32,16 +36,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_listeformulaires"
+        android:id="@+id/btn_listeformulaires_horsligne"
         android:layout_width="300dp"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/button_rounded_grey"
+        android:text="Formulaires sauvegardés hors-ligne"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_nouveauformulaire" />
+
+    <Button
+        android:id="@+id/btn_listeformulaires_bd"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/button_rounded_grey"
         android:text="Formulaires sauvegardés"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_nouveauformulaire" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_listeformulaires_horsligne" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

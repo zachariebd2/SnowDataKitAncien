@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Accueil extends AppCompatActivity {
 
     private SessionManager sessionManager;
-    private Button btn_listeformulaires, btn_nouveauformulaire, btn_deconnexion;
+    private Button btn_listeformulaires_horsligne, btn_listeformulaires_bd, btn_nouveauformulaire, btn_deconnexion;
     private String pseudo, id;
 
     @Override
@@ -19,7 +19,8 @@ public class Accueil extends AppCompatActivity {
         setContentView(R.layout.activity_apres_connexion);
 
         sessionManager = new SessionManager(this);
-        btn_listeformulaires = findViewById(R.id.btn_listeformulaires);
+        btn_listeformulaires_horsligne = findViewById(R.id.btn_listeformulaires_horsligne);
+        btn_listeformulaires_bd = findViewById(R.id.btn_listeformulaires_bd);
         btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
         btn_deconnexion = findViewById(R.id.btn_deconnexion);
 
@@ -29,14 +30,24 @@ public class Accueil extends AppCompatActivity {
             id = sessionManager.getId();
         }
 
-        // Ouvrir la liste de formulaires
-        btn_listeformulaires.setOnClickListener(new View.OnClickListener() {
+        // Ouvrir la liste de formulaires sauvegardés hors-ligne
+        btn_listeformulaires_horsligne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Formulaires.class);
                 startActivity(i);
             }
         });
+
+        // Ouvrir la liste des formulaires sauvegardés dans la base de données
+        btn_listeformulaires_bd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), FormulairesBD.class);
+                startActivity(i);
+            }
+        });
+
 
         // Ouvrir la fenêtre de localisation afin de saisir un nouveau formulaire
         btn_nouveauformulaire.setOnClickListener(new View.OnClickListener() {
