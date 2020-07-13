@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".FormulairesBD">
 
+    <ListView
+        android:id="@+id/liste_formulaires_bd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/colorPrimaryDark"
+        android:dividerHeight="0.5dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
