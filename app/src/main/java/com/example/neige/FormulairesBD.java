@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,11 +20,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FormulairesBD extends AppCompatActivity {
     private ListView listView;
     private FormListAdapter adapter;
     public static ArrayList<Formulaire> formulaireArrayList = new ArrayList();
+    private String id_user;
 
     String url = "https://neige.000webhostapp.com/retrieve.php";
     private Formulaire formulaire;
@@ -37,6 +41,14 @@ public class FormulairesBD extends AppCompatActivity {
         adapter = new FormListAdapter(this, R.layout.adapter_view_layout, formulaireArrayList);
         listView.setAdapter(adapter);
 
+        // Bundle pour stocker les "extras", c'est-à-dire les variables (int, float, String...)
+        Bundle extras = getIntent().getExtras();
+        // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
+        if (extras != null) {
+            // On re-stocke tout dans de nouvelles variables
+            id_user = extras.getString("id_user");
+        }
+
         retrieveData();
     }
 
@@ -47,7 +59,7 @@ public class FormulairesBD extends AppCompatActivity {
                     public void onResponse(String response) {
                         formulaireArrayList.clear();
                         try {
-                            Log.d("RESPONSE_LIST", response);
+                            Log.d("RESPONSE_LIST", response); // La réponse reçue par le serveur
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -78,7 +90,14 @@ public class FormulairesBD extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(FormulairesBD.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("id_user", id_user); // $_POST["id_user"]
+                return map;
+            }
+        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);

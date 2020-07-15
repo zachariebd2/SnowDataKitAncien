@@ -35,6 +35,8 @@ public class Accueil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Formulaires.class);
+                i.putExtra("pseudo", pseudo);
+                i.putExtra("id_user", id);
                 startActivity(i);
             }
         });
@@ -44,6 +46,8 @@ public class Accueil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), FormulairesBD.class);
+                i.putExtra("pseudo", pseudo);
+                i.putExtra("id_user", id);
                 startActivity(i);
             }
         });
@@ -55,7 +59,7 @@ public class Accueil extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Localisation.class);
                 i.putExtra("pseudo", pseudo);
-                i.putExtra("id", id);
+                i.putExtra("id_user", id);
                 startActivity(i);
             }
         });
