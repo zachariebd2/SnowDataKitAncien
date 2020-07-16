@@ -59,7 +59,7 @@ public class FormulairesBD extends AppCompatActivity {
                     public void onResponse(String response) {
                         formulaireArrayList.clear();
                         try {
-                            Log.d("RESPONSE_LIST", response);
+                            Log.d("RESPONSE_LIST", response); // La réponse reçue par le serveur
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -94,7 +94,7 @@ public class FormulairesBD extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("id_user", id_user); // POST_["id_user"] dans le fichier php
+                map.put("id_user", id_user); // $_POST["id_user"]
                 return map;
             }
         };

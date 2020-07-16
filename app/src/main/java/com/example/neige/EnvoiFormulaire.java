@@ -109,11 +109,6 @@ public class EnvoiFormulaire extends AppCompatActivity {
                             Toast.makeText(EnvoiFormulaire.this, errors.get("req"), Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                    @Override
-                    public void onError(String message) {
-                        Toast.makeText(EnvoiFormulaire.this, message, Toast.LENGTH_SHORT).show();
-                    }
                 });
             }
         });

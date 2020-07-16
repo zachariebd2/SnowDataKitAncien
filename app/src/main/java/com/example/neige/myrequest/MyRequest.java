@@ -66,11 +66,7 @@ public class MyRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                    callback.onError("NetworkError : Impossible de se connecter !");
-                } else if (error instanceof VolleyError) {
-                    callback.onError("VolleyError : Une erreur s'est produite...");
-                }
+                errorType(error, callback);
             }
         }) {
             // Envoi des paramètres que l'on veut tester dans le fichier register.php
@@ -113,11 +109,7 @@ public class MyRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                    callback.onError("NetworkError : Impossible de se connecter !");
-                } else if (error instanceof VolleyError) {
-                    callback.onError("VolleyError : Une erreur s'est produite...");
-                }
+                errorType(error, (RegisterCallback) callback);
             }
         }) {
             // Envoi des paramètres que l'on veut tester dans le fichier register.php
@@ -162,11 +154,7 @@ public class MyRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                    callback.onError("NetworkError : Impossible de se connecter !");
-                } else if (error instanceof VolleyError) {
-                    callback.onError("VolleyError : Une erreur s'est produite...");
-                }
+                errorType(error, (RegisterCallback) callback);
             }
         }) {
             // Envoi des paramètres que l'on veut tester dans le fichier insertionForm.php
@@ -205,6 +193,14 @@ public class MyRequest {
 
         void inputErrors(Map<String, String> errors);
 
-        void onError(String message);
+        // void onError(String message);
+    }
+
+    private void errorType(VolleyError error, RegisterCallback callback) {
+        if (error instanceof NetworkError) {
+            callback.onError("NetworkError : Impossible de se connecter !");
+        } else if (error instanceof VolleyError) {
+            callback.onError("VolleyError : Une erreur s'est produite...");
+        }
     }
 }
