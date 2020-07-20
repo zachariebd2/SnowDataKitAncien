@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/snow"
     tools:context=".Accueil">
 
     <Button
         android:id="@+id/btn_deconnexion"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:background="@drawable/button_rounded_grey"
         android:text="Déconnexion"
         android:textColor="@android:color/white"
@@ -20,13 +21,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/btn_aide"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_rounded_grey"
+        android:text="Aide"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/btn_nouveauformulaire"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:background="@drawable/button_rounded"
         android:text="Saisir un nouveau formulaire"
         android:textColor="@android:color/white"
@@ -39,11 +49,7 @@
         android:id="@+id/btn_listeformulaires_horsligne"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:background="@drawable/button_rounded_grey"
         android:text="Formulaires sauvegardés hors-ligne"
         android:textColor="@android:color/white"
@@ -55,17 +61,25 @@
         android:id="@+id/btn_listeformulaires_bd"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:background="@drawable/button_rounded_grey"
-        android:text="Formulaires sauvegardés"
+        android:text="Formulaires envoyés"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_listeformulaires_horsligne" />
+
+    <Button
+        android:id="@+id/btn_statistiques"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_rounded_grey"
+        android:text="Statistiques"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_listeformulaires_bd" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

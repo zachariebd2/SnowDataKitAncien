@@ -88,6 +88,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         // Création du formulaire
         // On récupère la date du jour
         String date = getDateDuJour();
+
         // On convertir l'ID en int
         int idInt = Integer.parseInt(id);
         final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, idInt);

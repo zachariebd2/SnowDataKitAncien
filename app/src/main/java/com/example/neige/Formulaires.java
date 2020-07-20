@@ -1,14 +1,18 @@
 package com.example.neige;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -72,8 +76,38 @@ public class Formulaires extends AppCompatActivity {
             // Afficher un message au clic d'un item
             liste_forms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(Formulaires.this, arrayList.get(position).toString(), Toast.LENGTH_SHORT).show();
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    // Toast.makeText(Formulaires.this, arrayList.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    final AlertDialog dialog = new AlertDialog.Builder(Formulaires.this)
+                            .setTitle("Suppression du formulaire")
+                            .setMessage("Êtes-vous sûr(e) de vouloir supprimer ce formulaire ?")
+                            .setPositiveButton("Oui", null)
+                            .setNegativeButton("Non", null)
+                            .show();
+
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onClick(View v) {
+                            // Initialisation du JSON
+                            File f = new File(getFilesDir(), FILE_NAME);
+                            String formsStr = null;
+                            try {
+                                formsStr = lireForm(f);
+                                // Fetch du JSON
+                                JSONObject obj = new JSONObject(formsStr);
+                                JSONArray formulaires = obj.getJSONArray("formulaires");
+                                arrayList.remove(position);
+                                // On met à jour l'adapter
+                                arrayAdapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            } catch (IOException | JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
                 }
             });
         }

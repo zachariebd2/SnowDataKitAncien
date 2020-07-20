@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Accueil extends AppCompatActivity {
 
     private SessionManager sessionManager;
-    private Button btn_listeformulaires_horsligne, btn_listeformulaires_bd, btn_nouveauformulaire, btn_deconnexion;
+    private Button btn_listeformulaires_horsligne, btn_listeformulaires_bd, btn_nouveauformulaire, btn_deconnexion, btn_aide, btn_statistiques;
     private String pseudo, id;
 
     @Override
@@ -23,6 +23,8 @@ public class Accueil extends AppCompatActivity {
         btn_listeformulaires_bd = findViewById(R.id.btn_listeformulaires_bd);
         btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
         btn_deconnexion = findViewById(R.id.btn_deconnexion);
+        btn_aide = findViewById(R.id.btn_aide);
+        btn_statistiques = findViewById(R.id.btn_statistiques);
 
         // Si l'utilisateur est loggé, on récupère les informations
         if (sessionManager.isLogged()) {
@@ -72,6 +74,26 @@ public class Accueil extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), Bienvenue.class);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        // Ouvrir la fenêtre d'aide
+        btn_aide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent i = new Intent(getApplicationContext(), Aide.class);
+                // startActivity(i);
+                // finish();
+            }
+        });
+
+        // Ouvrir la fenêtre de statistiques
+        btn_statistiques.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent i = new Intent(getApplicationContext(), Statistiques.class);
+                // startActivity(i);
+                // finish();
             }
         });
     }

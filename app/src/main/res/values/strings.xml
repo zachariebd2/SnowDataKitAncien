@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Neige</string>
+    <string name="app_name">SNOW DATA COLLECT</string>
     <string name="get_current_position">Position actuelle</string>
     <string name="titrePourcentageDeNeige">Pourcentage de neige</string>
     <string name="aidePourcentageDeNeige">Pourcentage de neige dans un cercle de rayon 10m.</string>

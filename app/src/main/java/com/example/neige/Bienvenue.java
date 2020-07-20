@@ -17,6 +17,7 @@ public class Bienvenue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
 
+        // Récupération des boutons et de la session utilisateur
         btn_login = findViewById(R.id.btn_login);
         btn_register = findViewById(R.id.btn_register);
         sessionManager = new SessionManager(this);
