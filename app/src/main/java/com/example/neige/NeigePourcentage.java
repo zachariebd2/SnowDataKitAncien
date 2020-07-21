@@ -17,7 +17,7 @@ public class NeigePourcentage extends AppCompatActivity {
     private int restoredAccuracy, restoredAltitude, pourcentageNeige;
     private double restoredLatitude, restoredLongitude;
     private String pseudo;
-    private String id;
+    private int id_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class NeigePourcentage extends AppCompatActivity {
             restoredLatitude = extras.getDouble("savedLatitude");
             int restoredIdPourcentageNeige = extras.getInt("saved_id_pourcentageNeige");
             pseudo = extras.getString("pseudo");
-            id = extras.getString("id");
+            id_user = extras.getInt("id_user");
 
             // Restauration de l'input radio choisi
             radioGroup.check(restoredIdPourcentageNeige);
@@ -66,6 +66,8 @@ public class NeigePourcentage extends AppCompatActivity {
                     i.putExtra("re_savedLongitude", restoredLongitude);
                     i.putExtra("re_savedLatitude", restoredLatitude);
                     i.putExtra("id_input_pourcentageNeige", radioGroup.getCheckedRadioButtonId());
+                    i.putExtra("id_user", id_user);
+                    i.putExtra("pseudo", pseudo);
                     startActivity(i); // On lance l'activité Localisation
                 } else if (x1 > x2) {
                     Intent i = new Intent(this, EnvoiFormulaire.class);
@@ -76,8 +78,8 @@ public class NeigePourcentage extends AppCompatActivity {
                     i.putExtra("savedLatitude", restoredLatitude);
                     i.putExtra("savedPourcentageNeige", pourcentageNeige);
                     i.putExtra("id_input_pourcentageNeige", radioGroup.getCheckedRadioButtonId());
+                    i.putExtra("id_user", id_user);
                     i.putExtra("pseudo", pseudo);
-                    i.putExtra("id", id);
                     startActivity(i);
                 }
                 break;
