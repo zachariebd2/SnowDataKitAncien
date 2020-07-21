@@ -87,6 +87,7 @@ public class Accueil extends AppCompatActivity {
                 // Intent i = new Intent(getApplicationContext(), Aide.class);
                 // startActivity(i);
                 // finish();
+                Toast.makeText(Accueil.this, "Clic !", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -97,6 +98,7 @@ public class Accueil extends AppCompatActivity {
                 // Intent i = new Intent(getApplicationContext(), Statistiques.class);
                 // startActivity(i);
                 // finish();
+                Toast.makeText(Accueil.this, "Clic !", Toast.LENGTH_SHORT).show();
             }
         });
     }
