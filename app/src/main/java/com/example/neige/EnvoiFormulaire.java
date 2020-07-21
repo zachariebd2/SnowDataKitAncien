@@ -2,6 +2,7 @@ package com.example.neige;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,8 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private int saved_id_pourcentageNeige;
     private RequestQueue queue;
     private MyRequest request;
-    private String pseudo, id;
+    private String pseudo;
+    private int id_user;
 
 
     @Override
@@ -56,7 +58,8 @@ public class EnvoiFormulaire extends AppCompatActivity {
             pourcentageNeige = extras.getInt("savedPourcentageNeige");
             saved_id_pourcentageNeige = extras.getInt("id_input_pourcentageNeige");
             pseudo = extras.getString("pseudo");
-            id = extras.getString("id");
+            id_user = extras.getInt("id_user");
+            Log.d("ID_DEBUG", "ID : " + id_user);
         }
 
         // Instanciation de la requête Volley via la classe VolleySingleton (Google)
@@ -89,9 +92,8 @@ public class EnvoiFormulaire extends AppCompatActivity {
         // On récupère la date du jour
         String date = getDateDuJour();
 
-        // On convertir l'ID en int
-        int idInt = Integer.parseInt(id);
-        final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, idInt);
+
+        final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
 
         // Bouton pour envoyer les données dans la BD
         Button boutonEnvoyer = findViewById(R.id.envoyerFormulaire);
@@ -159,7 +161,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         form.put("id", !file.exists() ? 1 : recupererId(lireForm(file)) + 1);
 
         // On insère les données
-        form.put("id_user", id);
+        form.put("id_user", id_user);
         form.put("pseudo", pseudo);
         form.put("date", date);
         form.put("latitude", latitude);
@@ -216,6 +218,8 @@ public class EnvoiFormulaire extends AppCompatActivity {
                     i.putExtra("savedLatitude", latitude);
                     i.putExtra("savedPourcentageNeige", pourcentageNeige);
                     i.putExtra("saved_id_pourcentageNeige", saved_id_pourcentageNeige);
+                    i.putExtra("id_user", id_user);
+                    i.putExtra("pseudo", pseudo);
 
                     startActivity(i); // On lance l'activité NeigePourcentage
                 }

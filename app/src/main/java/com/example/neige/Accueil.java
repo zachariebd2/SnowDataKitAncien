@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +12,8 @@ public class Accueil extends AppCompatActivity {
 
     private SessionManager sessionManager;
     private Button btn_listeformulaires_horsligne, btn_listeformulaires_bd, btn_nouveauformulaire, btn_deconnexion, btn_aide, btn_statistiques;
-    private String pseudo, id;
+    private String pseudo;
+    private int id_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class Accueil extends AppCompatActivity {
         // Si l'utilisateur est loggé, on récupère les informations
         if (sessionManager.isLogged()) {
             pseudo = sessionManager.getPseudo();
-            id = sessionManager.getId();
+            id_user = Integer.parseInt(sessionManager.getId());
+            Toast.makeText(this, "ID : " + id_user, Toast.LENGTH_SHORT).show();
         }
 
         // Ouvrir la liste de formulaires sauvegardés hors-ligne
@@ -38,7 +41,7 @@ public class Accueil extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Formulaires.class);
                 i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id);
+                i.putExtra("id_user", id_user);
                 startActivity(i);
             }
         });
@@ -49,7 +52,7 @@ public class Accueil extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), FormulairesBD.class);
                 i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id);
+                i.putExtra("id_user", id_user);
                 startActivity(i);
             }
         });
@@ -61,7 +64,7 @@ public class Accueil extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Localisation.class);
                 i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id);
+                i.putExtra("id_user", id_user);
                 startActivity(i);
             }
         });
