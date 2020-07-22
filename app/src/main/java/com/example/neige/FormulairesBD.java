@@ -27,10 +27,10 @@ public class FormulairesBD extends AppCompatActivity {
     private ListView listView;
     private FormListAdapter adapter;
     public static ArrayList<Formulaire> formulaireArrayList = new ArrayList();
-    private String id_user;
 
     String url = "https://neige.000webhostapp.com/retrieve.php";
     private Formulaire formulaire;
+    private int id_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,7 @@ public class FormulairesBD extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
         if (extras != null) {
-            // On re-stocke tout dans de nouvelles variables
-            id_user = extras.getString("id_user");
+            id_user = extras.getInt("id_user");
         }
 
         retrieveData();
@@ -74,7 +73,6 @@ public class FormulairesBD extends AppCompatActivity {
                                     int accuracy = object.getInt("f_accuracy");
                                     int altitude = object.getInt("f_altitude");
                                     String date = object.getString("f_date");
-                                    int id_user = object.getInt("f_id_user");
 
                                     formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
                                     formulaireArrayList.add(formulaire);
@@ -94,7 +92,7 @@ public class FormulairesBD extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("id_user", id_user); // $_POST["id_user"]
+                map.put("id_user", id_user + ""); // $_POST["id_user"]
                 return map;
             }
         };

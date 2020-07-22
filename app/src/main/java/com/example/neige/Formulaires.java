@@ -15,6 +15,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.example.neige.myrequest.MyRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +27,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Formulaires extends AppCompatActivity {
     private static final String TAG = "Formulaires";
@@ -31,6 +35,9 @@ public class Formulaires extends AppCompatActivity {
     FormListAdapter arrayAdapter;
     String FILE_NAME = "formulaires.json";
     private float x1, x2;
+    private int id_user;
+    private RequestQueue queue;
+    private MyRequest request;
 
 
     @Override
@@ -42,6 +49,17 @@ public class Formulaires extends AppCompatActivity {
 
         // Initialisation du JSON
         File f = new File(getFilesDir(), FILE_NAME);
+
+        // Bundle pour stocker les "extras", c'est-à-dire les variables (int, float, String...)
+        Bundle extras = getIntent().getExtras();
+        // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
+        if (extras != null) {
+            id_user = extras.getInt("id_user");
+        }
+
+        // Instanciation de la requête Volley via la classe VolleySingleton (Google)
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        request = new MyRequest(this, queue);
 
         // Vérification
         if (!f.exists())
@@ -79,8 +97,8 @@ public class Formulaires extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                     // Toast.makeText(Formulaires.this, arrayList.get(position).toString(), Toast.LENGTH_SHORT).show();
                     final AlertDialog dialog = new AlertDialog.Builder(Formulaires.this)
-                            .setTitle("Suppression du formulaire")
-                            .setMessage("Êtes-vous sûr(e) de vouloir supprimer ce formulaire ?")
+                            .setTitle("Envoi du formulaire")
+                            .setMessage("Êtes-vous sûr(e) de vouloir envoyer ce formulaire ?")
                             .setPositiveButton("Oui", null)
                             .setNegativeButton("Non", null)
                             .show();
@@ -98,9 +116,28 @@ public class Formulaires extends AppCompatActivity {
                                 // Fetch du JSON
                                 JSONObject obj = new JSONObject(formsStr);
                                 JSONArray formulaires = obj.getJSONArray("formulaires");
-                                arrayList.remove(position);
-                                // On met à jour l'adapter
-                                arrayAdapter.notifyDataSetChanged();
+                                double latitude = arrayList.get(position).getLatitude();
+                                double longitude = arrayList.get(position).getLongitude();
+                                int altitude = arrayList.get(position).getAltitude();
+                                int pourcentageNeige = arrayList.get(position).getPourcentageNeige();
+                                int accuracy = arrayList.get(position).getAccurracy();
+                                String date = arrayList.get(position).getDate();
+                                Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
+
+                                request.insertionFormulaire(formulaire, new MyRequest.InsertionFormCallback() {
+                                    @Override
+                                    public void onSuccess(String message) {
+                                        Toast.makeText(Formulaires.this, message, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void inputErrors(Map<String, String> errors) {
+                                        if (errors.get("req") != null) {
+                                            Toast.makeText(Formulaires.this, errors.get("req"), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
                                 dialog.dismiss();
                             } catch (IOException | JSONException e) {
                                 e.printStackTrace();

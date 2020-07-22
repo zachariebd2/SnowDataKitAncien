@@ -32,7 +32,6 @@ public class Accueil extends AppCompatActivity {
         if (sessionManager.isLogged()) {
             pseudo = sessionManager.getPseudo();
             id_user = Integer.parseInt(sessionManager.getId());
-            Toast.makeText(this, "ID : " + id_user, Toast.LENGTH_SHORT).show();
         }
 
         // Ouvrir la liste de formulaires sauvegardés hors-ligne
