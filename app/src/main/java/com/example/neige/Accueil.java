@@ -8,8 +8,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité principale...
+ * L'utilisateur peut saisir un nouveau formulaire, consulter ses formulaires envoyés/sauvegardés, et voir ses statistiques
+ */
 public class Accueil extends AppCompatActivity {
 
+    // Variables nécessaires
     private SessionManager sessionManager;
     private Button btn_listeformulaires_horsligne, btn_listeformulaires_bd, btn_nouveauformulaire, btn_deconnexion, btn_aide, btn_statistiques;
     private String pseudo;
@@ -20,6 +26,7 @@ public class Accueil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apres_connexion);
 
+        // Instanciation des variables
         sessionManager = new SessionManager(this);
         btn_listeformulaires_horsligne = findViewById(R.id.btn_listeformulaires_horsligne);
         btn_listeformulaires_bd = findViewById(R.id.btn_listeformulaires_bd);

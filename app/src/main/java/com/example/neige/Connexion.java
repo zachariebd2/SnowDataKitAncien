@@ -14,6 +14,12 @@ import com.android.volley.RequestQueue;
 import com.example.neige.myrequest.MyRequest;
 import com.google.android.material.textfield.TextInputLayout;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité Connexion...
+ * L'utilisateur indique ses informations (pseudo, mot de passe) puis se connecte
+ * Une fois connecté, il est redirigé vers l'activité Accueil qui est l'activité centrale de l'application
+ */
 public class Connexion extends AppCompatActivity {
 
     private TextInputLayout til_pseudo, til_password;

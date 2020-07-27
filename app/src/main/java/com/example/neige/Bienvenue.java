@@ -7,8 +7,14 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité initiale
+ * L'utilisateur peut s'inscrire ou se connecter en cliquant sur le bouton correspondant
+ */
 public class Bienvenue extends AppCompatActivity {
 
+    // Variables nécessaires
     private Button btn_login, btn_register;
     private SessionManager sessionManager;
 
@@ -22,6 +28,7 @@ public class Bienvenue extends AppCompatActivity {
         btn_register = findViewById(R.id.btn_register);
         sessionManager = new SessionManager(this);
 
+        // Si l'utilisateur est déjà loggé, alors on le redirige vers l'application Accueil (activité principale)
         if (sessionManager.isLogged()) {
             Intent i = new Intent(getApplicationContext(), Accueil.class);
             startActivity(i);

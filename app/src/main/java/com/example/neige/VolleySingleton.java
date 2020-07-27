@@ -10,6 +10,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe fournie par Google et modifiée selon les besoins de l'application
+ * Utilise le Design Pattern Singleton pour utiliser la librairie Volley (une seule instance pour toute l'application)
+ */
 public class VolleySingleton {
 
     private static VolleySingleton mInstance;

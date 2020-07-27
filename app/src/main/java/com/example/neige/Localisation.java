@@ -29,6 +29,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité Localisation...
+ * L'utilisateur valide sa position GPS pour ensuite indiquer le pourcentage de neige
+ */
 public class Localisation extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;

@@ -15,8 +15,14 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Map;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité Inscription
+ * L'utilisateur peut s'inscrire en fournissant les informations suivantes (pseudo, email, mot de passe)
+ */
 public class Inscription extends AppCompatActivity {
 
+    // Variables nécessaires
     private Button btn_send_register;
     private TextInputLayout til_pseudo, til_email, til_password, til_password2;
     private ProgressBar pb_loader;
@@ -28,6 +34,7 @@ public class Inscription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription);
 
+        // Instanciation des variables
         btn_send_register = findViewById(R.id.btn_send_register);
         til_pseudo = findViewById(R.id.til_pseudo_register);
         til_email = findViewById(R.id.til_email_register);
@@ -57,6 +64,7 @@ public class Inscription extends AppCompatActivity {
                             finish();
                         }
 
+                        // Gestion des erreurs retournées par Volley
                         @Override
                         public void inputErrors(Map<String, String> errors) {
                             pb_loader.setVisibility(View.GONE);

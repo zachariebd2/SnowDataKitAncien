@@ -22,6 +22,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité Statistiques
+ * L'utilisateur peut simplement consulter des données le concernant (nombre de formulaires envoyés, rang)
+ */
 public class Statistiques extends AppCompatActivity {
     String url = "https://neige.000webhostapp.com/statistiques.php";
     private int id_user;
@@ -50,6 +55,7 @@ public class Statistiques extends AppCompatActivity {
         stats();
     }
 
+    // Méthode qui crée une requête Volley pour dialoguer avec le serveur et la BD via le fichier statistiques.php
     public void stats() {
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

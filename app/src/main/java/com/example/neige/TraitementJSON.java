@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe anonyme afin de refactorer une méthode utilisée par plusieurs classes
+ */
 public class TraitementJSON {
 
     // Lire le contenu du fichier JSON et retourner le résultat dans une chaîne (String)
