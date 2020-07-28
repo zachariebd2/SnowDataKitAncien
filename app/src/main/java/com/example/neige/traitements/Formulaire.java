@@ -1,5 +1,9 @@
 package com.example.neige.traitements;
 
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe pour créer/gérer les objets Formulaire
+ */
 public class Formulaire {
     private double latitude, longitude;
     private int accuracy, altitude, pourcentageNeige;

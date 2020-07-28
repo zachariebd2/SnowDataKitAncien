@@ -16,19 +16,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
+import com.example.neige.R;
+import com.example.neige.myrequest.MyRequest;
 import com.example.neige.traitements.FormListAdapter;
 import com.example.neige.traitements.Formulaire;
-import com.example.neige.R;
 import com.example.neige.traitements.VolleySingleton;
-import com.example.neige.myrequest.MyRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -37,7 +39,6 @@ public class FormulairesHorsLigne extends AppCompatActivity {
     private static final String TAG = "Formulaires";
     ArrayList<Formulaire> arrayList = new ArrayList<>();
     FormListAdapter arrayAdapter;
-    String FILE_NAME = "formulaires.json";
     private float x1, x2;
     private int id_user;
     private RequestQueue queue;
@@ -51,15 +52,16 @@ public class FormulairesHorsLigne extends AppCompatActivity {
         Log.d(TAG, "onCreate: Started.");
         ListView liste_forms = findViewById(R.id.liste_formulaires);
 
-        // Initialisation du JSON
-        File f = new File(getFilesDir(), FILE_NAME);
-
         // Bundle pour stocker les "extras", c'est-à-dire les variables (int, float, String...)
         Bundle extras = getIntent().getExtras();
         // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
         if (extras != null) {
             id_user = extras.getInt("id_user");
         }
+
+        // Initialisation du JSON
+        File f = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+
 
         // Instanciation de la requête Volley via la classe VolleySingleton (Google)
         queue = VolleySingleton.getInstance(this).getRequestQueue();
@@ -95,6 +97,16 @@ public class FormulairesHorsLigne extends AppCompatActivity {
             // Lier l'Array Adapter à la ListView
             liste_forms.setAdapter(arrayAdapter);
 
+            // TODO
+            // Supprimer un formulaire après un clic long
+            liste_forms.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(FormulairesHorsLigne.this, "Clic long !", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+
             // Afficher un message au clic d'un item
             liste_forms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -113,13 +125,13 @@ public class FormulairesHorsLigne extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             // Initialisation du JSON
-                            File f = new File(getFilesDir(), FILE_NAME);
+                            File f = new File(getFilesDir(), "formulaires_" + id_user + ".json");
                             String formsStr = null;
                             try {
                                 formsStr = lireForm(f);
                                 // Fetch du JSON
                                 JSONObject obj = new JSONObject(formsStr);
-                                JSONArray formulaires = obj.getJSONArray("formulaires");
+                                final JSONArray formulaires = obj.getJSONArray("formulaires");
                                 double latitude = arrayList.get(position).getLatitude();
                                 double longitude = arrayList.get(position).getLongitude();
                                 int altitude = arrayList.get(position).getAltitude();
@@ -131,6 +143,13 @@ public class FormulairesHorsLigne extends AppCompatActivity {
                                 request.insertionFormulaire(formulaire, new MyRequest.InsertionFormCallback() {
                                     @Override
                                     public void onSuccess(String message) {
+                                        // Supression du formulaire envoyé de la liste
+                                        arrayList.remove(position);
+                                        arrayAdapter.notifyDataSetChanged();
+
+                                        /* // Supression du formulaire envoyé du fichier JSON
+                                        formulaires.remove(position); */
+                                        
                                         Toast.makeText(FormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
                                     }
 
@@ -166,6 +185,16 @@ public class FormulairesHorsLigne extends AppCompatActivity {
         }
         bufferedReader.close();
         return stringBuilder.toString();
+    }
+
+    // Écrire le contenu dans le fichier JSON
+    private void stockerForm(JSONObject jsonObject) throws IOException {
+        String formStr = jsonObject.toString();
+        File file = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(formStr);
+        bufferedWriter.close();
     }
 
     // Méthode pour Swipe vers la suite du formulaire

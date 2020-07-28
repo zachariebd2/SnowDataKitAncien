@@ -2,7 +2,6 @@ package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -11,10 +10,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
-import com.example.neige.traitements.Formulaire;
 import com.example.neige.R;
-import com.example.neige.traitements.VolleySingleton;
 import com.example.neige.myrequest.MyRequest;
+import com.example.neige.traitements.Formulaire;
+import com.example.neige.traitements.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +31,7 @@ import java.util.Date;
 import java.util.Map;
 
 public class EnvoiFormulaire extends AppCompatActivity {
-    private static final String FILE_NAME = "formulaires.json";
+    private static String FILE_NAME;
     private int accuracy, altitude;
     private double latitude, longitude;
     private int pourcentageNeige;
@@ -62,7 +61,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
             saved_id_pourcentageNeige = extras.getInt("id_input_pourcentageNeige");
             pseudo = extras.getString("pseudo");
             id_user = extras.getInt("id_user");
-            Log.d("ID_DEBUG", "ID : " + id_user);
+            FILE_NAME = "formulaires_" + id_user + ".json";
         }
 
         // Instanciation de la requête Volley via la classe VolleySingleton (Google)

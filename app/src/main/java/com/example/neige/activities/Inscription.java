@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.example.neige.R;
-import com.example.neige.traitements.VolleySingleton;
 import com.example.neige.myrequest.MyRequest;
+import com.example.neige.traitements.VolleySingleton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Map;
