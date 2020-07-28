@@ -1,10 +1,12 @@
-package com.example.neige;
+package com.example.neige.traitements;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.neige.R;
 
 public class PostgreSSH extends AppCompatActivity {
     private Button boutonReq;

@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Localisation">
+    tools:context=".activities.Localisation">
 
     <TextView
         android:id="@+id/textPrecision"

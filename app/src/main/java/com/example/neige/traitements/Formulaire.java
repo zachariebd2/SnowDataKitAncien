@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.traitements;
 
 public class Formulaire {
     private double latitude, longitude;

@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.neige.R;
+import com.example.neige.traitements.SessionManager;
 
 /**
  * @author Salah-Eddine ET-TALEBY

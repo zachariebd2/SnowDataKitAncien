@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Build;
@@ -16,6 +16,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
+import com.example.neige.traitements.FormListAdapter;
+import com.example.neige.traitements.Formulaire;
+import com.example.neige.R;
+import com.example.neige.traitements.VolleySingleton;
 import com.example.neige.myrequest.MyRequest;
 
 import org.json.JSONArray;
@@ -29,7 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Formulaires extends AppCompatActivity {
+public class FormulairesHorsLigne extends AppCompatActivity {
     private static final String TAG = "Formulaires";
     ArrayList<Formulaire> arrayList = new ArrayList<>();
     FormListAdapter arrayAdapter;
@@ -96,7 +100,7 @@ public class Formulaires extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                     // Toast.makeText(Formulaires.this, arrayList.get(position).toString(), Toast.LENGTH_SHORT).show();
-                    final AlertDialog dialog = new AlertDialog.Builder(Formulaires.this)
+                    final AlertDialog dialog = new AlertDialog.Builder(FormulairesHorsLigne.this)
                             .setTitle("Envoi du formulaire")
                             .setMessage("Êtes-vous sûr(e) de vouloir envoyer ce formulaire ?")
                             .setPositiveButton("Oui", null)
@@ -127,13 +131,13 @@ public class Formulaires extends AppCompatActivity {
                                 request.insertionFormulaire(formulaire, new MyRequest.InsertionFormCallback() {
                                     @Override
                                     public void onSuccess(String message) {
-                                        Toast.makeText(Formulaires.this, message, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(FormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
                                     public void inputErrors(Map<String, String> errors) {
                                         if (errors.get("req") != null) {
-                                            Toast.makeText(Formulaires.this, errors.get("req"), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(FormulairesHorsLigne.this, errors.get("req"), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });

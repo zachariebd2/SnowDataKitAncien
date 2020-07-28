@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.neige.R;
 
 public class NeigePourcentage extends AppCompatActivity {
 

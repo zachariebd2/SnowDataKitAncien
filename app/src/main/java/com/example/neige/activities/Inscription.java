@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
+import com.example.neige.R;
+import com.example.neige.traitements.VolleySingleton;
 import com.example.neige.myrequest.MyRequest;
 import com.google.android.material.textfield.TextInputLayout;
 

@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.neige.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;

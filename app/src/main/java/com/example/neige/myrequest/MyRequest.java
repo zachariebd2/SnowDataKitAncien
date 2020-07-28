@@ -10,7 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.neige.Formulaire;
+import com.example.neige.traitements.Formulaire;
 
 import org.json.JSONException;
 import org.json.JSONObject;

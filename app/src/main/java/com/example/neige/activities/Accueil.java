@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.neige.R;
+import com.example.neige.traitements.SessionManager;
 
 /**
  * @author Salah-Eddine ET-TALEBY
@@ -45,7 +48,7 @@ public class Accueil extends AppCompatActivity {
         btn_listeformulaires_horsligne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Formulaires.class);
+                Intent i = new Intent(getApplicationContext(), FormulairesHorsLigne.class);
                 i.putExtra("pseudo", pseudo);
                 i.putExtra("id_user", id_user);
                 startActivity(i);

@@ -1,4 +1,4 @@
-package com.example.neige;
+package com.example.neige.traitements;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.neige.R;
 
 import java.util.ArrayList;
 
