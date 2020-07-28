@@ -17,8 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.Statistiques" />
-        <activity android:name=".traitements.PostgreSSH" />
+        <activity android:name=".activities.Statistiques"></activity>
+        <activity android:name=".traitements.PostgreSSH"></activity>
         <activity android:name=".activities.FormulairesBD" />
         <activity android:name=".activities.Accueil" />
         <activity android:name=".activities.Bienvenue">
