@@ -27,7 +27,7 @@ public class Accueil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apres_connexion);
+        setContentView(R.layout.activity_accueil);
 
         // Instanciation des variables
         sessionManager = new SessionManager(this);

@@ -24,7 +24,7 @@ public class Bienvenue extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accueil);
+        setContentView(R.layout.activity_bienvenue);
 
         // Récupération des boutons et de la session utilisateur
         btn_login = findViewById(R.id.btn_login);

@@ -48,7 +48,7 @@ public class FormulairesHorsLigne extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_formulaires);
+        setContentView(R.layout.activity_formulaires_hors_ligne);
         Log.d(TAG, "onCreate: Started.");
         ListView liste_forms = findViewById(R.id.liste_formulaires);
 
@@ -147,9 +147,10 @@ public class FormulairesHorsLigne extends AppCompatActivity {
                                         arrayList.remove(position);
                                         arrayAdapter.notifyDataSetChanged();
 
-                                        /* // Supression du formulaire envoyé du fichier JSON
-                                        formulaires.remove(position); */
-                                        
+                                        // Supression du formulaire envoyé du fichier JSON
+                                        // TODO
+
+
                                         Toast.makeText(FormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
                                     }
 
@@ -196,6 +197,7 @@ public class FormulairesHorsLigne extends AppCompatActivity {
         bufferedWriter.write(formStr);
         bufferedWriter.close();
     }
+
 
     // Méthode pour Swipe vers la suite du formulaire
     public boolean onTouchEvent(MotionEvent touchEvent) {
