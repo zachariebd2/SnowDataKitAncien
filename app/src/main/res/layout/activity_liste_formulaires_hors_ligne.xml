@@ -4,13 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.ListeFormulairesHorsLigne">
-    
-    <ListView
-        android:id="@+id/liste_forms"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
+    <ListView
+        android:id="@+id/lv_formulairesHL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:divider="@drawable/empty_tall_divider"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_envoyer"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_rounded"
+            android:onClick="envoyerFormulairesHL"
+            android:text="Envoyer"
+            android:textColor="@android:color/white"
+            tools:layout_editor_absoluteX="196dp"
+            tools:layout_editor_absoluteY="670dp" />
+
+        <Button
+            android:id="@+id/btn_supprimer"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_rounded"
+            android:onClick="supprimerFormulairesHL"
+            android:text="Supprimer"
+            android:textColor="@android:color/white"
+            tools:layout_editor_absoluteX="46dp"
+            tools:layout_editor_absoluteY="670dp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

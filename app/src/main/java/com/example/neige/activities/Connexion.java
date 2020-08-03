@@ -53,8 +53,8 @@ public class Connexion extends AppCompatActivity {
             public void onClick(View v) {
                 final String pseudo = til_pseudo.getEditText().getText().toString().trim();
                 final String password = til_password.getEditText().getText().toString().trim();
-                pb_loader_login.setVisibility(View.VISIBLE);
                 if (pseudo.length() > 0 && password.length() > 0) {
+                    pb_loader_login.setVisibility(View.VISIBLE);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {

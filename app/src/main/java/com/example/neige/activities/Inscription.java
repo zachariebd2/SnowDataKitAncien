@@ -50,12 +50,12 @@ public class Inscription extends AppCompatActivity {
         btn_send_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pb_loader.setVisibility(View.VISIBLE);
                 String pseudo = til_pseudo.getEditText().getText().toString().trim();
                 String email = til_email.getEditText().getText().toString().trim();
                 String password = til_password.getEditText().getText().toString().trim();
                 String password2 = til_password2.getEditText().getText().toString().trim();
                 if (pseudo.length() > 0 && email.length() > 0 && password.length() > 0 && password2.length() > 0) {
+                    pb_loader.setVisibility(View.VISIBLE);
                     request.register(pseudo, email, password, password2, new MyRequest.RegisterCallback() {
                         @Override
                         public void onSuccess(String message) {

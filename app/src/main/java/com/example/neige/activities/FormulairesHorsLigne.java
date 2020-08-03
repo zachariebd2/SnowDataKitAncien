@@ -27,10 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -96,82 +94,72 @@ public class FormulairesHorsLigne extends AppCompatActivity {
 
             // Lier l'Array Adapter à la ListView
             liste_forms.setAdapter(arrayAdapter);
-
-            // TODO
-            // Supprimer un formulaire après un clic long
-            liste_forms.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(FormulairesHorsLigne.this, "Clic long !", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
-
-            // Afficher un message au clic d'un item
-            liste_forms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                    // Toast.makeText(Formulaires.this, arrayList.get(position).toString(), Toast.LENGTH_SHORT).show();
-                    final AlertDialog dialog = new AlertDialog.Builder(FormulairesHorsLigne.this)
-                            .setTitle("Envoi du formulaire")
-                            .setMessage("Êtes-vous sûr(e) de vouloir envoyer ce formulaire ?")
-                            .setPositiveButton("Oui", null)
-                            .setNegativeButton("Non", null)
-                            .show();
-
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                        @Override
-                        public void onClick(View v) {
-                            // Initialisation du JSON
-                            File f = new File(getFilesDir(), "formulaires_" + id_user + ".json");
-                            String formsStr = null;
-                            try {
-                                formsStr = lireForm(f);
-                                // Fetch du JSON
-                                JSONObject obj = new JSONObject(formsStr);
-                                final JSONArray formulaires = obj.getJSONArray("formulaires");
-                                double latitude = arrayList.get(position).getLatitude();
-                                double longitude = arrayList.get(position).getLongitude();
-                                int altitude = arrayList.get(position).getAltitude();
-                                int pourcentageNeige = arrayList.get(position).getPourcentageNeige();
-                                int accuracy = arrayList.get(position).getAccurracy();
-                                String date = arrayList.get(position).getDate();
-                                Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
-
-                                request.insertionFormulaire(formulaire, new MyRequest.InsertionFormCallback() {
-                                    @Override
-                                    public void onSuccess(String message) {
-                                        // Supression du formulaire envoyé de la liste
-                                        arrayList.remove(position);
-                                        arrayAdapter.notifyDataSetChanged();
-
-                                        // Supression du formulaire envoyé du fichier JSON
-                                        // TODO
-
-
-                                        Toast.makeText(FormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    @Override
-                                    public void inputErrors(Map<String, String> errors) {
-                                        if (errors.get("req") != null) {
-                                            Toast.makeText(FormulairesHorsLigne.this, errors.get("req"), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-
-                                dialog.dismiss();
-                            } catch (IOException | JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-                }
-            });
         }
+
+        // Afficher une boîte de dialogue
+        liste_forms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                // Toast.makeText(Formulaires.this, arrayList.get(position).toString(), Toast.LENGTH_SHORT).show();
+                final AlertDialog dialog = new AlertDialog.Builder(FormulairesHorsLigne.this)
+                        .setTitle("Envoi du formulaire")
+                        .setMessage("Êtes-vous sûr(e) de vouloir envoyer ce formulaire ?")
+                        .setPositiveButton("Oui", null)
+                        .setNegativeButton("Non", null)
+                        .show();
+
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public void onClick(View v) {
+                        // Initialisation du JSON
+                        File f = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+                        String formsStr = null;
+                        try {
+                            formsStr = lireForm(f);
+                            // Fetch du JSON
+                            JSONObject obj = new JSONObject(formsStr);
+                            final JSONArray formulaires = obj.getJSONArray("formulaires");
+                            double latitude = arrayList.get(position).getLatitude();
+                            double longitude = arrayList.get(position).getLongitude();
+                            int altitude = arrayList.get(position).getAltitude();
+                            int pourcentageNeige = arrayList.get(position).getPourcentageNeige();
+                            int accuracy = arrayList.get(position).getAccurracy();
+                            String date = arrayList.get(position).getDate();
+                            Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
+
+                            request.insertionFormulaire(formulaire, new MyRequest.InsertionFormCallback() {
+                                @Override
+                                public void onSuccess(String message) {
+                                    // Supression du formulaire envoyé de la liste
+                                    arrayList.remove(position);
+                                    arrayAdapter.notifyDataSetChanged();
+
+                                    // Supression du formulaire envoyé du fichier JSON
+                                    // TODO
+
+
+                                    Toast.makeText(FormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void inputErrors(Map<String, String> errors) {
+                                    if (errors.get("req") != null) {
+                                        Toast.makeText(FormulairesHorsLigne.this, errors.get("req"), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                            dialog.dismiss();
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
     // Lire le contenu du fichier JSON et retourner le résultat dans une chaîne (String)
@@ -186,16 +174,6 @@ public class FormulairesHorsLigne extends AppCompatActivity {
         }
         bufferedReader.close();
         return stringBuilder.toString();
-    }
-
-    // Écrire le contenu dans le fichier JSON
-    private void stockerForm(JSONObject jsonObject) throws IOException {
-        String formStr = jsonObject.toString();
-        File file = new File(getFilesDir(), "formulaires_" + id_user + ".json");
-        FileWriter fileWriter = new FileWriter(file);
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        bufferedWriter.write(formStr);
-        bufferedWriter.close();
     }
 
 

@@ -93,6 +93,8 @@ public class Accueil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
+                i.putExtra("pseudo", pseudo);
+                i.putExtra("id_user", id_user);
                 startActivity(i);
                 finish();
                 // Toast.makeText(Accueil.this, "Clic !", Toast.LENGTH_SHORT).show();

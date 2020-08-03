@@ -31,14 +31,14 @@ public class MyRequest {
     }
 
     public void register(final String pseudo, final String email, final String password, final String password2, final RegisterCallback callback) {
-        String url = URL_SERVEUR + "register.php";
+        String url = "http://osr-cesbio.ups-tlse.fr/sdk/register.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Map<String, String> errors = new HashMap<>();
                 try {
-                    Log.d("response_convert_err", "[" + response + "]");
+                    Log.d("response_convert_err", response);
                     JSONObject json = new JSONObject(response);
                     Boolean error = json.getBoolean("error");
                     if (!error) {
@@ -66,7 +66,11 @@ public class MyRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                errorType(error, callback);
+                if (error instanceof NetworkError) {
+                    callback.onError("NetworkError : Impossible de se connecter !");
+                } else if (error instanceof VolleyError) {
+                    callback.onError("VolleyError : Une erreur s'est produite...");
+                }
             }
         }) {
             // Envoi des paramètres que l'on veut tester dans le fichier register.php
@@ -84,12 +88,13 @@ public class MyRequest {
     }
 
     public void login(final String pseudo, final String password, final LoginCallback callback) {
-        String url = URL_SERVEUR + "login.php";
+        String url = "http://osr-cesbio.ups-tlse.fr/sdk/login.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject json = null;
+                Log.d("RESPONSE", response);
                 try {
                     json = new JSONObject(response);
                     Boolean error = json.getBoolean("error");
@@ -109,7 +114,11 @@ public class MyRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                errorType(error, (RegisterCallback) callback);
+                if (error instanceof NetworkError) {
+                    callback.onError("NetworkError : Impossible de se connecter ! " + error.toString());
+                } else if (error instanceof VolleyError) {
+                    callback.onError("VolleyError : Une erreur s'est produite..." + error.toString());
+                }
             }
         }) {
             // Envoi des paramètres que l'on veut tester dans le fichier register.php
