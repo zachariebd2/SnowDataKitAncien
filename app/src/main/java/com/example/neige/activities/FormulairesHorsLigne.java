@@ -149,6 +149,11 @@ public class FormulairesHorsLigne extends AppCompatActivity {
                                         Toast.makeText(FormulairesHorsLigne.this, errors.get("req"), Toast.LENGTH_SHORT).show();
                                     }
                                 }
+
+                                @Override
+                                public void onError(String message) {
+                                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                }
                             });
 
                             dialog.dismiss();

@@ -22,7 +22,7 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_formulaires_hors_ligne);
 
-        ListView ch1 = (ListView) findViewById(R.id.lv_formulairesHL);
+        ListView ch1 = findViewById(R.id.lv_formulairesHL);
         ch1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         String[] items = {"Date : 21/06/2020\nLatitude - Longitude : 42.452, 78.456", "Date : 24/06/2020\nLatitude - Longitude : 42.452, 78.456", "Date : 26/06/2020\nLatitude - Longitude : 42.452, 78.456"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.rowlayout, R.id.txt_form, items);
