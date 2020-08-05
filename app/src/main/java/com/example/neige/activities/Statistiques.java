@@ -29,7 +29,7 @@ import java.util.Map;
  * L'utilisateur peut simplement consulter des données le concernant (nombre de formulaires envoyés, rang)
  */
 public class Statistiques extends AppCompatActivity {
-    String url = "https://neige.000webhostapp.com/statistiques.php";
+    String url = "http://osr-cesbio.ups-tlse.fr/sdk/statistiques.php";
     private int id_user;
     int nbFormsEnvoyes;
     TextView tv_nbFormsEnvoyes, tv_pseudo;

@@ -31,7 +31,7 @@ public class FormulairesBD extends AppCompatActivity {
     private FormListAdapter adapter;
     public static ArrayList<Formulaire> formulaireArrayList = new ArrayList();
 
-    String url = "https://neige.000webhostapp.com/retrieve.php";
+    String url = "http://osr-cesbio.ups-tlse.fr/sdk/retrieve.php";
     private Formulaire formulaire;
     private int id_user;
 
@@ -70,7 +70,7 @@ public class FormulairesBD extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String f_id = object.getString("f_id");
-                                    int pourcentageNeige = object.getInt("f_pourcentageNeige");
+                                    int pourcentageNeige = object.getInt("f_pourcentageneige");
                                     Double latitude = object.getDouble("f_latitude");
                                     Double longitude = object.getDouble("f_longitude");
                                     int accuracy = object.getInt("f_accuracy");
