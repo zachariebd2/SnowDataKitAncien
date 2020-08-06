@@ -1,3 +1,9 @@
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité principale...
+ * L'utilisateur peut saisir un nouveau formulaire, consulter ses formulaires envoyés/sauvegardés, et voir ses statistiques
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -10,11 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.neige.R;
 import com.example.neige.traitements.SessionManager;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité principale...
- * L'utilisateur peut saisir un nouveau formulaire, consulter ses formulaires envoyés/sauvegardés, et voir ses statistiques
- */
 public class Accueil extends AppCompatActivity {
 
     // Variables nécessaires

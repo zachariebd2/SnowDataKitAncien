@@ -182,7 +182,7 @@ public class FormulairesHorsLigne extends AppCompatActivity {
     }
 
 
-    // Méthode pour Swipe vers la suite du formulaire
+    // Méthode pour Swipe
     public boolean onTouchEvent(MotionEvent touchEvent) {
         switch (touchEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -192,8 +192,7 @@ public class FormulairesHorsLigne extends AppCompatActivity {
                 x2 = touchEvent.getX();
 
                 // Swipe vers la gauche
-                if (x1 > x2) {
-                    // Envoi des données vers l'activité ApresConnexion
+                if (x1 < x2) {
                     Intent i = new Intent(this, Accueil.class);
                     startActivity(i);
                 }

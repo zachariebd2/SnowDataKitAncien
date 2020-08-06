@@ -1,7 +1,9 @@
 package com.example.neige.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class FormulairesBD extends AppCompatActivity {
     String url = "http://osr-cesbio.ups-tlse.fr/sdk/retrieve.php";
     private Formulaire formulaire;
     private int id_user;
+    private float x1, x2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,5 +105,24 @@ public class FormulairesBD extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    // Méthode pour Swipe
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        switch (touchEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+
+                // Swipe vers la gauche
+                if (x1 < x2) {
+                    Intent i = new Intent(this, Accueil.class);
+                    startActivity(i);
+                }
+                break;
+        }
+        return false;
     }
 }

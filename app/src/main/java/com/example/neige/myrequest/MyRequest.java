@@ -93,6 +93,7 @@ public class MyRequest {
             public void onResponse(String response) {
                 JSONObject json = null;
                 try {
+                    Log.d("RESPONSE", response);
                     json = new JSONObject(response);
                     Boolean error = json.getBoolean("error");
 
