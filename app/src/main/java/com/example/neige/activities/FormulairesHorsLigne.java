@@ -192,7 +192,7 @@ public class FormulairesHorsLigne extends AppCompatActivity {
                 x2 = touchEvent.getX();
 
                 // Swipe vers la gauche
-                if (x1 < x2) {
+                if (x1 > x2) {
                     Intent i = new Intent(this, Accueil.class);
                     startActivity(i);
                 }
