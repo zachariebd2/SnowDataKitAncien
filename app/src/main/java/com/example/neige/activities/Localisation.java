@@ -47,6 +47,7 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
     private int saved_id_pourcentageNeige; // ID de l'input sauvegardé
     private String pseudo;
     private int id_user;
+    private TextView tv_loggeEnTantQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,9 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
             textLatLong.setText(getFormattedLocationInDegree(re_restoredLatitude, re_restoredLongitude) + " | Altitude : " + re_restoredAltitude + "m");
             getCurrentLocation();
         }
+
+        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Fonction : Check des permissions au clic du bouton
         findViewById(R.id.buttonGetCurrentPosition).setOnClickListener(new View.OnClickListener() {

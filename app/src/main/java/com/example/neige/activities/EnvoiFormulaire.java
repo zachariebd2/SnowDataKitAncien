@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private MyRequest request;
     private String pseudo;
     private int id_user;
+    private TextView tv_loggeEnTantQue;
 
 
     @Override
@@ -63,6 +65,9 @@ public class EnvoiFormulaire extends AppCompatActivity {
             id_user = extras.getInt("id_user");
             FILE_NAME = "formulaires_" + id_user + ".json";
         }
+
+        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Instanciation de la requête Volley via la classe VolleySingleton (Google)
         queue = VolleySingleton.getInstance(this).getRequestQueue();

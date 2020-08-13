@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,9 +35,12 @@ public class Statistiques extends AppCompatActivity {
     String url = "http://osr-cesbio.ups-tlse.fr/sdk/statistiques.php";
     private int id_user;
     int nbFormsEnvoyes;
+    double contribution;
     TextView tv_nbFormsEnvoyes, tv_pseudo;
     String pseudo;
     private float x1, x2;
+    private TextView tv_loggeEnTantQue;
+    TextView tv_contribution;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,10 @@ public class Statistiques extends AppCompatActivity {
         }
 
         tv_nbFormsEnvoyes = findViewById(R.id.tv_nbFormsEnvoyes);
-        tv_pseudo = findViewById(R.id.tv_pseudo);
+        tv_contribution = findViewById(R.id.tv_contribution);
 
-        tv_pseudo.setText(pseudo);
+        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         stats();
     }
@@ -74,8 +79,10 @@ public class Statistiques extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     nbFormsEnvoyes = object.getInt("nbFormsEnvoyes");
+                                    contribution = object.getDouble("contribution");
                                 }
                                 tv_nbFormsEnvoyes.setText("Nombre de formulaires envoyés : " + nbFormsEnvoyes);
+                                tv_contribution.setText("Contribution : " + (double) Math.round(contribution * 100) / 100 + "%");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

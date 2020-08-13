@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,7 @@ public class NeigePourcentage extends AppCompatActivity {
     private double restoredLatitude, restoredLongitude;
     private String pseudo;
     private int id_user;
+    private TextView tv_loggeEnTantQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class NeigePourcentage extends AppCompatActivity {
             // Restauration de l'input radio choisi
             radioGroup.check(restoredIdPourcentageNeige);
         }
+
+        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
     }
 
     public void check(View v) {

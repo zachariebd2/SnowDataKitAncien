@@ -2,6 +2,7 @@ package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -69,6 +70,7 @@ public class Inscription extends AppCompatActivity {
                         // Gestion des erreurs retournées par Volley
                         @Override
                         public void inputErrors(Map<String, String> errors) {
+                            Log.d("ERRORS", errors.toString());
                             pb_loader.setVisibility(View.GONE);
                             if (errors.get("pseudo") != null) {
                                 til_pseudo.setError(errors.get("pseudo"));

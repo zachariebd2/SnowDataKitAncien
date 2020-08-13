@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,7 @@ public class Accueil extends AppCompatActivity {
     private SessionManager sessionManager;
     private Button btn_listeformulaires_horsligne, btn_listeformulaires_bd, btn_nouveauformulaire, btn_deconnexion, btn_debug, btn_statistiques;
     private String pseudo;
+    private TextView tv_loggeEnTantQue;
     private int id_user;
 
     @Override
@@ -38,11 +40,15 @@ public class Accueil extends AppCompatActivity {
         btn_debug = findViewById(R.id.btn_debug);
         btn_statistiques = findViewById(R.id.btn_statistiques);
 
+
         // Si l'utilisateur est loggé, on récupère les informations
         if (sessionManager.isLogged()) {
             pseudo = sessionManager.getPseudo();
             id_user = Integer.parseInt(sessionManager.getId());
         }
+
+        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Ouvrir la liste de formulaires sauvegardés hors-ligne
         btn_listeformulaires_horsligne.setOnClickListener(new View.OnClickListener() {

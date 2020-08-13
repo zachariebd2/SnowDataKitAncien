@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -41,6 +42,8 @@ public class FormulairesHorsLigne extends AppCompatActivity {
     private int id_user;
     private RequestQueue queue;
     private MyRequest request;
+    private String pseudo;
+    private TextView tv_loggeEnTantQue;
 
 
     @Override
@@ -55,7 +58,11 @@ public class FormulairesHorsLigne extends AppCompatActivity {
         // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
         if (extras != null) {
             id_user = extras.getInt("id_user");
+            pseudo = extras.getString("pseudo");
         }
+
+        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Initialisation du JSON
         File f = new File(getFilesDir(), "formulaires_" + id_user + ".json");

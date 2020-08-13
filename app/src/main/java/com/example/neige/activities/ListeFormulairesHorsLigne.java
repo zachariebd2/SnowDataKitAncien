@@ -1,50 +1,151 @@
 package com.example.neige.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
 import com.example.neige.R;
+import com.example.neige.myrequest.MyRequest;
+import com.example.neige.traitements.FormAdapter;
+import com.example.neige.traitements.Formulaire;
+import com.example.neige.traitements.VolleySingleton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ListeFormulairesHorsLigne extends AppCompatActivity {
-    private ArrayList<String> selectedItems = new ArrayList<>();
+    private ListView listView;
+    private int id_user;
+    private String pseudo;
+    private ArrayList<Formulaire> formList;
+    private RequestQueue queue;
+    private MyRequest request;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_formulaires_hors_ligne);
 
-        ListView ch1 = findViewById(R.id.lv_formulairesHL);
-        ch1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        String[] items = {"Date : 21/06/2020\nLatitude - Longitude : 42.452, 78.456", "Date : 24/06/2020\nLatitude - Longitude : 42.452, 78.456", "Date : 26/06/2020\nLatitude - Longitude : 42.452, 78.456"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.rowlayout, R.id.txt_form, items);
-        ch1.setAdapter(adapter);
-        ch1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Bundle pour stocker les "extras", c'est-à-dire les variables (int, float, String...)
+        Bundle extras = getIntent().getExtras();
+        // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
+        if (extras != null) {
+            id_user = extras.getInt("id_user");
+            pseudo = extras.getString("pseudo");
+        }
+
+        // Instanciation de la requête Volley via la classe VolleySingleton (Google)
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        request = new MyRequest(this, queue);
+
+        listView = (ListView) findViewById(R.id.liste_forms_hl);
+        listView.setAdapter(new FormAdapter(displayFormList(), this));
+
+        // Envoi des formulaires sélectionnés
+        Button btn_envoyer = (Button) findViewById(R.id.btn_envoyer);
+        btn_envoyer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = ((TextView) view).getText().toString();
-                if (selectedItems.contains(selectedItem)) {
-                    selectedItems.remove(selectedItem);
-                } else {
-                    selectedItems.add(selectedItem);
-                }
+            public void onClick(View v) {
+                final ArrayList<Formulaire> selectedForms = ((FormAdapter) listView.getAdapter()).getSelectFormList();
+                final AlertDialog dialog = new AlertDialog.Builder(ListeFormulairesHorsLigne.this)
+                        .setTitle("Envoi du formulaire")
+                        .setMessage("Êtes-vous sûr(e) de vouloir envoyer ce(s) formulaire(s) ?")
+                        .setPositiveButton("Oui", null)
+                        .setNegativeButton("Non", null)
+                        .show();
+
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public void onClick(View v) {
+                        request.insertionFormulaireHL(selectedForms, new MyRequest.InsertionFormCallback() {
+                            @Override
+                            public void onSuccess(String message) {
+                                Toast.makeText(ListeFormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void inputErrors(Map<String, String> errors) {
+                                if (errors.get("req") != null) {
+                                    Toast.makeText(ListeFormulairesHorsLigne.this, errors.get("req"), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(String message) {
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        dialog.dismiss();
+                    }
+                });
             }
         });
     }
 
-    public void envoyerFormulairesHL(View view) {
-        String items = "";
-        for (String item : selectedItems) {
-            items += "- " + item + "\n";
+    private ArrayList<Formulaire> displayFormList() {
+        formList = new ArrayList<>();
+
+        // Initialisation du JSON
+        File f = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+
+        // Vérification
+        if (!f.exists())
+            Toast.makeText(this, "Il n'y a pour le moment, aucun formulaire à afficher.", Toast.LENGTH_SHORT).show();
+        else {
+            try {
+                String formsStr = lireForm(f);
+                // Fetch du JSON
+                JSONObject obj = new JSONObject(formsStr);
+                JSONArray formulaires = obj.getJSONArray("formulaires");
+                for (int i = 0; i < formulaires.length(); i++) {
+                    JSONObject form = formulaires.getJSONObject(i);
+                    int pourcentageNeige = form.getInt("pourcentageNeige");
+                    double latitude = form.getDouble("latitude");
+                    double longitude = form.getDouble("longitude");
+                    int accuracy = form.getInt("accuracy");
+                    int altitude = form.getInt("altitude");
+                    String date = form.getString("date");
+                    formList.add(new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, 0));
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
         }
-        Toast.makeText(this, "Items choisis : \n" + items, Toast.LENGTH_SHORT).show();
+        return formList;
+
+    }
+
+    // Lire le contenu du fichier JSON et retourner le résultat dans une chaîne (String)
+    private String lireForm(File file) throws IOException {
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = bufferedReader.readLine();
+        while (line != null) {
+            stringBuilder.append(line).append("\n");
+            line = bufferedReader.readLine();
+        }
+        bufferedReader.close();
+        return stringBuilder.toString();
     }
 }

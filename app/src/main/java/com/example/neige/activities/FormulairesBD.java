@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +37,9 @@ public class FormulairesBD extends AppCompatActivity {
     String url = "http://osr-cesbio.ups-tlse.fr/sdk/retrieve.php";
     private Formulaire formulaire;
     private int id_user;
+    private String pseudo;
     private float x1, x2;
+    private TextView tv_loggeEnTantQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,11 @@ public class FormulairesBD extends AppCompatActivity {
         // Si le bundle n'est pas null (= contient au moins une chaîne, ou un entier...)
         if (extras != null) {
             id_user = extras.getInt("id_user");
+            pseudo = extras.getString("pseudo");
         }
+
+        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         retrieveData();
     }
