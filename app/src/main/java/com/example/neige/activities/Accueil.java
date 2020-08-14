@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,10 +55,11 @@ public class Accueil extends AppCompatActivity {
         btn_listeformulaires_horsligne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), FormulairesHorsLigne.class);
+                Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
                 i.putExtra("pseudo", pseudo);
                 i.putExtra("id_user", id_user);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -99,12 +101,12 @@ public class Accueil extends AppCompatActivity {
         btn_debug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
+                /*Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
                 i.putExtra("pseudo", pseudo);
                 i.putExtra("id_user", id_user);
                 startActivity(i);
-                finish();
-                // Toast.makeText(Accueil.this, "Clic !", Toast.LENGTH_SHORT).show();
+                finish();*/
+                Toast.makeText(Accueil.this, "Clic !", Toast.LENGTH_SHORT).show();
             }
         });
 
