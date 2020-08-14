@@ -36,14 +36,12 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private int accuracy, altitude;
     private double latitude, longitude;
     private int pourcentageNeige;
-    private Button boutonSauvegarder;
+    private Button btn_sauvegarder;
     private float x1, x2;
     private int saved_id_pourcentageNeige;
-    private RequestQueue queue;
     private MyRequest request;
     private String pseudo;
     private int id_user;
-    private TextView tv_loggeEnTantQue;
 
 
     @Override
@@ -66,17 +64,18 @@ public class EnvoiFormulaire extends AppCompatActivity {
             FILE_NAME = "formulaires_" + id_user + ".json";
         }
 
-        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        TextView tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
         tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Instanciation de la requête Volley via la classe VolleySingleton (Google)
-        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(this).getRequestQueue();
         request = new MyRequest(this, queue);
 
-        boutonSauvegarder = findViewById(R.id.sauvegarderFormulaire);
+        btn_sauvegarder = findViewById(R.id.btn_sauvegarderFormulaire);
+        Button btn_retourAccueil = findViewById(R.id.btn_retourAccueil);
 
         // Clic sur le bouton "Sauvegarder hors-ligne"
-        findViewById(R.id.sauvegarderFormulaire).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_sauvegarderFormulaire).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JSONObject form;
@@ -85,7 +84,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
                     // Si le fichier n'existe pas, on en crée un, sinon on ajoute l'objet au fichier JSON existant
                     form = !file.exists() ? ajouterForm() : addFormToJson(lireForm(file));
                     stockerForm(form);
-                    boutonSauvegarder.setEnabled(false); // On désactive le bouton
+                    btn_sauvegarder.setEnabled(false); // On désactive le bouton
                     Toast.makeText(EnvoiFormulaire.this, "Le formulaire a été sauvegardé !", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -95,22 +94,24 @@ public class EnvoiFormulaire extends AppCompatActivity {
             }
         });
 
-        // Création du formulaire
         // On récupère la date du jour
         String date = getDateDuJour();
 
-
+        // Création du formulaire
         final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
 
         // Bouton pour envoyer les données dans la BD
-        Button boutonEnvoyer = findViewById(R.id.envoyerFormulaire);
-        boutonEnvoyer.setOnClickListener(new View.OnClickListener() {
+        final Button btn_envoyer = findViewById(R.id.btn_envoyerFormulaire);
+        btn_envoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 request.insertionFormulaire(formulaire, new MyRequest.InsertionFormCallback() {
                     @Override
                     public void onSuccess(String message) {
                         Toast.makeText(EnvoiFormulaire.this, message, Toast.LENGTH_SHORT).show();
+                        // On désactive les deux boutons après l'envoi
+                        btn_envoyer.setEnabled(false);
+                        btn_sauvegarder.setEnabled(false);
                     }
 
                     @Override
@@ -125,6 +126,18 @@ public class EnvoiFormulaire extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+        // Retour à l'accueil
+        btn_retourAccueil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Accueil.class);
+                i.putExtra("pseudo", pseudo);
+                i.putExtra("id_user", id_user);
+                startActivity(i);
+                finish();
             }
         });
     }

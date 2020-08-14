@@ -1,3 +1,10 @@
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité Connexion...
+ * L'utilisateur indique ses informations (pseudo, mot de passe) puis se connecte
+ * Une fois connecté, il est redirigé vers l'activité Accueil qui est l'activité centrale de l'application
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -12,23 +19,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.example.neige.R;
+import com.example.neige.myrequest.MyRequest;
 import com.example.neige.traitements.SessionManager;
 import com.example.neige.traitements.VolleySingleton;
-import com.example.neige.myrequest.MyRequest;
 import com.google.android.material.textfield.TextInputLayout;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité Connexion...
- * L'utilisateur indique ses informations (pseudo, mot de passe) puis se connecte
- * Une fois connecté, il est redirigé vers l'activité Accueil qui est l'activité centrale de l'application
- */
 public class Connexion extends AppCompatActivity {
 
     private TextInputLayout til_pseudo, til_password;
-    private RequestQueue queue;
     private MyRequest request;
-    private Button btn_send_login;
     private ProgressBar pb_loader_login;
     private Handler handler;
     private SessionManager sessionManager;
@@ -38,14 +37,14 @@ public class Connexion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
 
-        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(this).getRequestQueue();
         request = new MyRequest(this, queue);
         handler = new Handler();
         sessionManager = new SessionManager(this);
 
         til_pseudo = findViewById(R.id.til_pseudo_log);
         til_password = findViewById(R.id.til_password_log);
-        btn_send_login = findViewById(R.id.btn_send_login);
+        Button btn_send_login = findViewById(R.id.btn_send_login);
         pb_loader_login = findViewById(R.id.pb_loader_login);
 
         btn_send_login.setOnClickListener(new View.OnClickListener() {

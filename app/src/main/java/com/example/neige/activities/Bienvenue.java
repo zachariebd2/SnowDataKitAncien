@@ -1,3 +1,9 @@
+/**
+ * @author Salah-Eddine ET-TALEBY
+ * Classe liée à l'activité initiale
+ * L'utilisateur peut s'inscrire ou se connecter en cliquant sur le bouton correspondant
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -10,16 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.neige.R;
 import com.example.neige.traitements.SessionManager;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité initiale
- * L'utilisateur peut s'inscrire ou se connecter en cliquant sur le bouton correspondant
- */
 public class Bienvenue extends AppCompatActivity {
-
-    // Variables nécessaires
-    private Button btn_login, btn_register;
-    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +24,9 @@ public class Bienvenue extends AppCompatActivity {
         setContentView(R.layout.activity_bienvenue);
 
         // Récupération des boutons et de la session utilisateur
-        btn_login = findViewById(R.id.btn_login);
-        btn_register = findViewById(R.id.btn_register);
-        sessionManager = new SessionManager(this);
+        Button btn_login = findViewById(R.id.btn_login);
+        Button btn_register = findViewById(R.id.btn_register);
+        SessionManager sessionManager = new SessionManager(this);
 
         // Si l'utilisateur est déjà loggé, alors on le redirige vers l'application Accueil (activité principale)
         if (sessionManager.isLogged()) {

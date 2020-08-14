@@ -7,7 +7,7 @@
     tools:context=".activities.EnvoiFormulaire">
 
     <Button
-        android:id="@+id/envoyerFormulaire"
+        android:id="@+id/btn_envoyerFormulaire"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_rounded"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/sauvegarderFormulaire"
+        android:id="@+id/btn_sauvegarderFormulaire"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -28,7 +28,19 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/envoyerFormulaire" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_envoyerFormulaire" />
+
+    <Button
+        android:id="@+id/btn_retourAccueil"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_rounded_grey"
+        android:text="Retour à l'accueil"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sauvegarderFormulaire" />
 
     <TextView
         android:id="@+id/tv_loggeEnTantQue"

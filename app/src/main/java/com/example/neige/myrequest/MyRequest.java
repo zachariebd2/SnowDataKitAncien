@@ -86,6 +86,54 @@ public class MyRequest {
         queue.add(request);
     }
 
+    public void update_password(final String password, final String password2, final int id_user, final UpdateCallback callback) {
+        String url = URL_SERVEUR + "updatePassword.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Map<String, String> errors = new HashMap<>();
+                try {
+                    JSONObject json = new JSONObject(response);
+                    Boolean error = json.getBoolean("error");
+                    if (!error) {
+                        callback.onSuccess("Mot de passe modifié avec succès !");
+
+                    } else {
+                        JSONObject messages = json.getJSONObject("message");
+                        if (messages.has("password")) {
+                            errors.put("password", messages.getString("password"));
+                        }
+                        callback.inputErrors(errors);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callback.onError("NetworkError : Impossible de se connecter !");
+                } else if (error instanceof VolleyError) {
+                    callback.onError("VolleyError : Une erreur s'est produite...");
+                }
+            }
+        }) {
+            // Envoi des paramètres que l'on veut tester dans le fichier register.php
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("id_user", id_user + "");
+                map.put("password", password);
+                map.put("password2", password2);
+                return map;
+            }
+        };
+        queue.add(request);
+    }
+
     public void login(final String pseudo, final String password, final LoginCallback callback) {
         String url = URL_SERVEUR + "login.php";
 
@@ -271,6 +319,14 @@ public class MyRequest {
     }
 
     public interface RegisterCallback {
+        void onSuccess(String message);
+
+        void inputErrors(Map<String, String> errors);
+
+        void onError(String message);
+    }
+
+    public interface UpdateCallback {
         void onSuccess(String message);
 
         void inputErrors(Map<String, String> errors);

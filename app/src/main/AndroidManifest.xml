@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ListeFormulairesHorsLigne"></activity>
+        <activity android:name=".activities.UpdatePassword"></activity>
+        <activity android:name=".activities.ListeFormulairesHorsLigne" />
         <activity android:name=".activities.Statistiques" />
         <activity android:name=".activities.FormulairesBD" />
         <activity android:name=".activities.Accueil" />
@@ -31,15 +32,6 @@
         </activity>
         <activity android:name=".activities.Inscription" />
         <activity android:name=".activities.Connexion" />
-        <activity android:name=".activities.FormulairesHorsLigne">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
         <activity android:name=".activities.EnvoiFormulaire" />
         <activity android:name=".activities.NeigePourcentage" /> <!-- API CODE GOOGLE MAPS -->
         <meta-data

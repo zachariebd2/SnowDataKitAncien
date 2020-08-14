@@ -17,9 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.neige.R;
 import com.example.neige.traitements.FormListAdapter;
 import com.example.neige.traitements.Formulaire;
-import com.example.neige.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +39,6 @@ public class FormulairesBD extends AppCompatActivity {
     private int id_user;
     private String pseudo;
     private float x1, x2;
-    private TextView tv_loggeEnTantQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class FormulairesBD extends AppCompatActivity {
             pseudo = extras.getString("pseudo");
         }
 
-        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        TextView tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
         tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         retrieveData();

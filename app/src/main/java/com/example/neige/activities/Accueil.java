@@ -6,6 +6,7 @@
 
 package com.example.neige.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,11 +23,10 @@ public class Accueil extends AppCompatActivity {
 
     // Variables nécessaires
     private SessionManager sessionManager;
-    private Button btn_listeformulaires_horsligne, btn_listeformulaires_bd, btn_nouveauformulaire, btn_deconnexion, btn_debug, btn_statistiques;
     private String pseudo;
-    private TextView tv_loggeEnTantQue;
     private int id_user;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +34,13 @@ public class Accueil extends AppCompatActivity {
 
         // Instanciation des variables
         sessionManager = new SessionManager(this);
-        btn_listeformulaires_horsligne = findViewById(R.id.btn_listeformulaires_horsligne);
-        btn_listeformulaires_bd = findViewById(R.id.btn_listeformulaires_bd);
-        btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
-        btn_deconnexion = findViewById(R.id.btn_deconnexion);
-        btn_debug = findViewById(R.id.btn_debug);
-        btn_statistiques = findViewById(R.id.btn_statistiques);
+        Button btn_listeformulaires_horsligne = findViewById(R.id.btn_listeformulaires_horsligne);
+        Button btn_listeformulaires_bd = findViewById(R.id.btn_listeformulaires_bd);
+        Button btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
+        Button btn_deconnexion = findViewById(R.id.btn_deconnexion);
+        Button btn_aide = findViewById(R.id.btn_aide);
+        Button btn_statistiques = findViewById(R.id.btn_statistiques);
+        Button btn_update_password = findViewById(R.id.btn_update_password);
 
 
         // Si l'utilisateur est loggé, on récupère les informations
@@ -48,7 +49,7 @@ public class Accueil extends AppCompatActivity {
             id_user = Integer.parseInt(sessionManager.getId());
         }
 
-        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        TextView tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
         tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Ouvrir la liste de formulaires sauvegardés hors-ligne
@@ -98,7 +99,7 @@ public class Accueil extends AppCompatActivity {
         });
 
         // Ouvrir la fenêtre d'aide
-        btn_debug.setOnClickListener(new View.OnClickListener() {
+        btn_aide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
@@ -115,6 +116,18 @@ public class Accueil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Statistiques.class);
+                i.putExtra("pseudo", pseudo);
+                i.putExtra("id_user", id_user);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        // Ouvrir la fenêtre de changement de password
+        btn_update_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), UpdatePassword.class);
                 i.putExtra("pseudo", pseudo);
                 i.putExtra("id_user", id_user);
                 startActivity(i);
