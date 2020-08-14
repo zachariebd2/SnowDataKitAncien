@@ -23,8 +23,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -100,6 +102,29 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
                 });
             }
         });
+
+        Button btn_supprimer = findViewById(R.id.btn_supprimer);
+        btn_supprimer.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                // TODO Suppression d'un/de plusieurs formulaire(s)
+                /*File file = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+
+                final ArrayList<Formulaire> selectedForms = ((FormAdapter) listView.getAdapter()).getSelectFormList();
+                JSONObject objet = null;
+                try {
+                    objet = new JSONObject(lireForm(file));
+                    JSONArray array = objet.getJSONArray("formulaires");
+                    for (int i = 0; i < selectedForms.size(); i++) {
+                        array.remove(selectedForms.get(i).getId_Form());
+                    }
+                } catch (JSONException | IOException e) {
+                    e.printStackTrace();
+                }*/
+            }
+        });
+
     }
 
     private ArrayList<Formulaire> displayFormList() {
@@ -119,13 +144,14 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
                 JSONArray formulaires = obj.getJSONArray("formulaires");
                 for (int i = 0; i < formulaires.length(); i++) {
                     JSONObject form = formulaires.getJSONObject(i);
+                    int id_form = form.getInt("id");
                     int pourcentageNeige = form.getInt("pourcentageNeige");
                     double latitude = form.getDouble("latitude");
                     double longitude = form.getDouble("longitude");
                     int accuracy = form.getInt("accuracy");
                     int altitude = form.getInt("altitude");
                     String date = form.getString("date");
-                    formList.add(new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user));
+                    formList.add(new Formulaire(id_form, date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user));
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -147,5 +173,15 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
         }
         bufferedReader.close();
         return stringBuilder.toString();
+    }
+
+    // Écrire le contenu dans le fichier JSON
+    private void stockerForm(JSONObject jsonObject) throws IOException {
+        String formStr = jsonObject.toString();
+        File file = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(formStr);
+        bufferedWriter.close();
     }
 }

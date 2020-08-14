@@ -98,7 +98,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
         String date = getDateDuJour();
 
         // Création du formulaire
-        final Formulaire formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
+        final Formulaire formulaire = new Formulaire(0, date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
 
         // Bouton pour envoyer les données dans la BD
         final Button btn_envoyer = findViewById(R.id.btn_envoyerFormulaire);

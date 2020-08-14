@@ -12,8 +12,10 @@ public class Formulaire {
     private String date;
     private int id_user;
     private boolean selected;
+    private int id_form;
 
-    public Formulaire(String date, double latitude, double longitude, int accuracy, int altitude, int pourcentageNeige, int id_user) {
+    public Formulaire(int id_form, String date, double latitude, double longitude, int accuracy, int altitude, int pourcentageNeige, int id_user) {
+        this.id_form = id_form;
         this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -28,12 +30,16 @@ public class Formulaire {
         return this.date;
     }
 
+    public int getId_Form() {
+        return this.id_form;
+    }
+
     public double getLatitude() {
-        return (double) Math.round(this.latitude * 100) / 100;
+        return this.latitude;
     }
 
     public double getLongitude() {
-        return (double) Math.round(this.longitude * 100) / 100;
+        return this.longitude;
     }
 
     public int getAccurracy() {
@@ -82,6 +88,10 @@ public class Formulaire {
 
     public void setId_user(int id_user) {
         this.id_user = id_user;
+    }
+
+    public void setId_form(int id_form) {
+        this.id_form = id_form;
     }
 
     public void setSelected(boolean selected) {

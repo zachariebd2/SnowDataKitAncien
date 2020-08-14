@@ -86,7 +86,7 @@ public class FormulairesBD extends AppCompatActivity {
                                     int altitude = object.getInt("f_altitude");
                                     String date = object.getString("f_date");
 
-                                    formulaire = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
+                                    formulaire = new Formulaire(0, date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
                                     formulaireArrayList.add(formulaire);
                                     adapter.notifyDataSetChanged();
                                 }

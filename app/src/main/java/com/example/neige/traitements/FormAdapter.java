@@ -41,8 +41,10 @@ public class FormAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        double latArrondie = (double) Math.round(formList.get(position).getLatitude() * 100) / 100;
+        double lngArrondie = (double) Math.round(formList.get(position).getLongitude() * 100) / 100;
         holder.formDate.setText("Date : " + formList.get(position).getDate());
-        holder.latlng.setText("Latitude - Longitude : " + formList.get(position).getLatitude() + " - " + formList.get(position).getLongitude() + " | Altitude : " + formList.get(position).getAltitude() + "m");
+        holder.latlng.setText("Latitude - Longitude : " + latArrondie + " - " + lngArrondie + " | Altitude : " + formList.get(position).getAltitude() + "m");
         holder.accuracy.setText("Précision : " + formList.get(position).getAccurracy() + "m");
         holder.pourcentageNeige.setText("Pourcentage de neige : " + formList.get(position).getPourcentageNeige() + "%");
         holder.checkBox.setChecked(formList.get(position).isSelected());
@@ -73,7 +75,7 @@ public class FormAdapter extends BaseAdapter {
 
 
     @Override
-    public Object getItem(int position) {
+    public Formulaire getItem(int position) {
         return formList.get(position);
     }
 

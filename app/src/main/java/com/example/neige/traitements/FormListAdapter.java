@@ -37,9 +37,10 @@ public class FormListAdapter extends ArrayAdapter<Formulaire> {
         int accuracy = getItem(position).getAccurracy();
         int altitude = getItem(position).getAltitude();
         int id_user = getItem(position).getIdUser();
+        int id_form = getItem(position).getId_Form();
 
         // Créer l'objet formulaire avec les infos
-        Formulaire form = new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
+        Formulaire form = new Formulaire(id_form, date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
@@ -49,7 +50,9 @@ public class FormListAdapter extends ArrayAdapter<Formulaire> {
         TextView tvPourcentageNeige = convertView.findViewById(R.id.textPourcentageDeNeige);
 
         tvDate.setText(date);
-        tvLatLng.setText("Lat/Lng : " + latitude + ", " + longitude);
+        double latArrondie = (double) Math.round(latitude * 100) / 100;
+        double lngArrondie = (double) Math.round(longitude * 100) / 100;
+        tvLatLng.setText("Lat/Lng : " + latArrondie + ", " + lngArrondie);
         tvPourcentageNeige.setText("Pourcentage de neige : " + pourcentageNeige + "%");
 
         return convertView;
