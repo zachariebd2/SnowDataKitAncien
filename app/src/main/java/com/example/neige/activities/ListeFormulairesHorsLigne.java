@@ -55,11 +55,11 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         request = new MyRequest(this, queue);
 
-        listView = (ListView) findViewById(R.id.liste_forms_hl);
+        listView = findViewById(R.id.liste_forms_hl);
         listView.setAdapter(new FormAdapter(displayFormList(), this));
 
         // Envoi des formulaires sélectionnés
-        Button btn_envoyer = (Button) findViewById(R.id.btn_envoyer);
+        Button btn_envoyer = findViewById(R.id.btn_envoyer);
         btn_envoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +125,7 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
                     int accuracy = form.getInt("accuracy");
                     int altitude = form.getInt("altitude");
                     String date = form.getString("date");
-                    formList.add(new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, 0));
+                    formList.add(new Formulaire(date, latitude, longitude, accuracy, altitude, pourcentageNeige, id_user));
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.neige.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FormAdapter extends BaseAdapter {
     ArrayList<Formulaire> formList;

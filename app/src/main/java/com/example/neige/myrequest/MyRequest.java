@@ -193,8 +193,7 @@ public class MyRequest {
         String accuracies = "";
         String pourcentagesNeige = "";
         String altitudes = "";
-        final int id_user = selectedForms.get(0).getIdUser();
-        Log.d("ID_USER", "id user :" + id_user);
+        int id_user = 0;
 
         for (int i = 0; i < selectedForms.size(); i++) {
             longitudes += selectedForms.get(i).getLongitude();
@@ -203,6 +202,7 @@ public class MyRequest {
             accuracies += selectedForms.get(i).getAccurracy();
             pourcentagesNeige += selectedForms.get(i).getPourcentageNeige();
             altitudes += selectedForms.get(i).getAltitude();
+            id_user = selectedForms.get(i).getIdUser();
             if (i != selectedForms.size() - 1) {
                 longitudes += ",";
                 latitudes += ",";
@@ -219,6 +219,7 @@ public class MyRequest {
         final String finalAltitudes = altitudes;
         final String finalPourcentagesNeige = pourcentagesNeige;
         final String finalDates = dates;
+        final int finalId_user = id_user;
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -262,7 +263,7 @@ public class MyRequest {
                 map.put("altitudes", finalAltitudes);
                 map.put("pourcentagesNeige", finalPourcentagesNeige);
                 map.put("dates", finalDates);
-                map.put("id_user", id_user + "");
+                map.put("id_user", finalId_user + "");
                 return map;
             }
         };
