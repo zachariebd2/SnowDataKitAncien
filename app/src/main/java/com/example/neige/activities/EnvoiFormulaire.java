@@ -112,6 +112,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
                         // On désactive les deux boutons après l'envoi
                         btn_envoyer.setEnabled(false);
                         btn_sauvegarder.setEnabled(false);
+
                     }
 
                     @Override
