@@ -1,12 +1,15 @@
 package com.example.neige.traitements;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.neige.R;
 
@@ -24,6 +27,7 @@ public class FormAdapter extends BaseAdapter {
         this.formList = formList;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
@@ -49,13 +53,11 @@ public class FormAdapter extends BaseAdapter {
         holder.pourcentageNeige.setText("Pourcentage de neige : " + formList.get(position).getPourcentageNeige() + "%");
         holder.checkBox.setChecked(formList.get(position).isSelected());
 
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isSelected = ((CheckBox) v).isChecked();
-                formList.get(position).setSelected(isSelected);
-            }
+        holder.checkBox.setOnClickListener(v -> {
+            boolean isSelected = ((CheckBox) v).isChecked();
+            formList.get(position).setSelected(isSelected);
         });
+
         return convertView;
 
     }
@@ -71,6 +73,15 @@ public class FormAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return formList.size();
+    }
+
+    public ArrayList<Integer> getPositions() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < formList.size(); i++) {
+            if (formList.get(i).isSelected())
+                list.add(i);
+        }
+        return list;
     }
 
 

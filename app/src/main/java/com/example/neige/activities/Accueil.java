@@ -37,10 +37,9 @@ public class Accueil extends AppCompatActivity {
         Button btn_listeformulaires_horsligne = findViewById(R.id.btn_listeformulaires_horsligne);
         Button btn_listeformulaires_bd = findViewById(R.id.btn_listeformulaires_bd);
         Button btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
-        Button btn_deconnexion = findViewById(R.id.btn_deconnexion);
         Button btn_aide = findViewById(R.id.btn_aide);
         Button btn_statistiques = findViewById(R.id.btn_statistiques);
-        Button btn_update_password = findViewById(R.id.btn_update_password);
+        Button btn_gestion_compte = findViewById(R.id.btn_gestion_compte);
 
 
         // Si l'utilisateur est loggé, on récupère les informations
@@ -87,17 +86,6 @@ public class Accueil extends AppCompatActivity {
             }
         });
 
-        // Déconnecter l'utilisateur lorsqu'il clique sur le bouton "Déconnexion"
-        btn_deconnexion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionManager.logout();
-                Intent i = new Intent(getApplicationContext(), Bienvenue.class);
-                startActivity(i);
-                finish();
-            }
-        });
-
         // Ouvrir la fenêtre d'aide
         btn_aide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,11 +111,11 @@ public class Accueil extends AppCompatActivity {
             }
         });
 
-        // Ouvrir la fenêtre de changement de password
-        btn_update_password.setOnClickListener(new View.OnClickListener() {
+        // Ouvrir la fenêtre de statistiques
+        btn_gestion_compte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), UpdatePassword.class);
+                Intent i = new Intent(getApplicationContext(), GestionCompte.class);
                 i.putExtra("pseudo", pseudo);
                 i.putExtra("id_user", id_user);
                 startActivity(i);

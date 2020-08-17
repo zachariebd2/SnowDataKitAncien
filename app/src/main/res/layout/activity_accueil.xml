@@ -8,14 +8,14 @@
     tools:context=".activities.Accueil">
 
     <Button
-        android:id="@+id/btn_deconnexion"
+        android:id="@+id/btn_gestion_compte"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:background="@drawable/button_rounded_grey"
-        android:text="Déconnexion"
+        android:text="Compte"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -81,18 +81,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_listeformulaires_bd" />
-
-    <Button
-        android:id="@+id/btn_update_password"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_rounded_grey"
-        android:text="Modifier mon mot de passe"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_statistiques" />
 
     <TextView
         android:id="@+id/tv_loggeEnTantQue"

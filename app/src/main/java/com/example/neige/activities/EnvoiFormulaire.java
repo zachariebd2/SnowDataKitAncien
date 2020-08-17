@@ -109,10 +109,11 @@ public class EnvoiFormulaire extends AppCompatActivity {
                     @Override
                     public void onSuccess(String message) {
                         Toast.makeText(EnvoiFormulaire.this, message, Toast.LENGTH_SHORT).show();
-                        // On désactive les deux boutons après l'envoi
-                        btn_envoyer.setEnabled(false);
-                        btn_sauvegarder.setEnabled(false);
-
+                        Intent i = new Intent(getApplicationContext(), Accueil.class);
+                        i.putExtra("pseudo", pseudo);
+                        i.putExtra("id_user", id_user);
+                        startActivity(i);
+                        finish();
                     }
 
                     @Override

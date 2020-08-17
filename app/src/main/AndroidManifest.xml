@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.UpdatePassword"></activity>
+        <activity android:name=".activities.GestionCompte"></activity>
+        <activity android:name=".activities.UpdatePassword" />
         <activity android:name=".activities.ListeFormulairesHorsLigne" />
         <activity android:name=".activities.Statistiques" />
         <activity android:name=".activities.FormulairesBD" />

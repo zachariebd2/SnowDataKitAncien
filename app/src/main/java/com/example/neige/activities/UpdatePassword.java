@@ -109,7 +109,7 @@ public class UpdatePassword extends AppCompatActivity {
 
                 // Swipe vers la gauche
                 if (x1 < x2) {
-                    Intent i = new Intent(this, Accueil.class);
+                    Intent i = new Intent(this, GestionCompte.class);
                     startActivity(i);
                 }
                 break;

@@ -2,6 +2,7 @@ package com.example.neige.activities;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class ListeFormulairesHorsLigne extends AppCompatActivity {
@@ -104,24 +106,23 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
         });
 
         Button btn_supprimer = findViewById(R.id.btn_supprimer);
-        btn_supprimer.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-                // TODO Suppression d'un/de plusieurs formulaire(s)
-                /*File file = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+        btn_supprimer.setOnClickListener(v -> {
+            // TODO Suppression d'un/de plusieurs formulaire(s)
 
-                final ArrayList<Formulaire> selectedForms = ((FormAdapter) listView.getAdapter()).getSelectFormList();
-                JSONObject objet = null;
-                try {
-                    objet = new JSONObject(lireForm(file));
-                    JSONArray array = objet.getJSONArray("formulaires");
-                    for (int i = 0; i < selectedForms.size(); i++) {
-                        array.remove(selectedForms.get(i).getId_Form());
-                    }
-                } catch (JSONException | IOException e) {
-                    e.printStackTrace();
-                }*/
+            final ArrayList<Integer> positions = ((FormAdapter) listView.getAdapter()).getPositions();
+            Log.d("SUPP_LIST", "tab : " + Arrays.toString(positions.toArray()));
+            Log.d("FORMLIST", Arrays.toString(formList.toArray()));
+            int j = 0;
+            if (positions.size() > 0) {
+                for (int i = positions.size() - 1; i >= 0; i--) {
+                    j = positions.get(i);
+                    Log.d("SUPP_LIST", "À supprimer (index) : " + positions.get(i));
+                    formList.remove(j);
+                }
+                ((FormAdapter) listView.getAdapter()).notifyDataSetChanged();
+                Toast.makeText(ListeFormulairesHorsLigne.this, positions.size() + " formulaire(s) a/ont été supprimé(s) !", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ListeFormulairesHorsLigne.this, "Vous devez sélectionner au moins un formulaire à supprimer.", Toast.LENGTH_SHORT).show();
             }
         });
 
