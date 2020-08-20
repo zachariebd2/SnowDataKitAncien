@@ -1,11 +1,11 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.traitements;
 
 import androidx.annotation.NonNull;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe pour créer/gérer les objets Formulaire
- */
 public class Formulaire {
     private double latitude, longitude;
     private int accuracy, altitude, pourcentageNeige;

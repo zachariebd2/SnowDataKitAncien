@@ -1,7 +1,6 @@
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité initiale
- * L'utilisateur peut s'inscrire ou se connecter en cliquant sur le bouton correspondant
+
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
  */
 
 package com.example.neige.activities;

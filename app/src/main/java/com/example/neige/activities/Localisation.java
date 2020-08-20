@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.Manifest;
@@ -30,24 +34,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité Localisation...
- * L'utilisateur valide sa position GPS pour ensuite indiquer le pourcentage de neige
- */
+
 public class Localisation extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAccAlt; // TextView de l'activité, altitude, longitude, latitude, précision
     private GoogleMap map; // Map Google
-    private SupportMapFragment mapFragment; // Wrapper
-    private float x1, x2; // Pour le swipe
+    private float x1;
     private double latitude, longitude; // Données affichées sur l'activité
     private int accuracy, altitude; // Données affichées sur l'activité
     private int saved_id_pourcentageNeige; // ID de l'input sauvegardé
     private String pseudo;
     private int id_user;
-    private TextView tv_loggeEnTantQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +57,8 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
         textAccAlt = findViewById(R.id.textPrecision);
 
         // Instantation de la carte Google
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        // Wrapper
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
@@ -83,7 +82,7 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
             getCurrentLocation();
         }
 
-        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        TextView tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
         tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Fonction : Check des permissions au clic du bouton
@@ -209,7 +208,8 @@ public class Localisation extends FragmentActivity implements OnMapReadyCallback
                 x1 = touchEvent.getX();
                 break;
             case MotionEvent.ACTION_UP:
-                x2 = touchEvent.getX();
+                // Pour le swipe
+                float x2 = touchEvent.getX();
 
                 // Swipe vers la gauche
                 if (x1 > x2) {

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -19,11 +23,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Map;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité Inscription
- * L'utilisateur peut s'inscrire en fournissant les informations suivantes (pseudo, email, mot de passe)
- */
+
 public class UpdatePassword extends AppCompatActivity {
 
     // Variables nécessaires
@@ -58,42 +58,39 @@ public class UpdatePassword extends AppCompatActivity {
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         request = new MyRequest(this, queue);
 
-        btn_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String password = til_password.getEditText().getText().toString().trim();
-                String password2 = til_password2.getEditText().getText().toString().trim();
-                if (password.length() > 0 && password2.length() > 0) {
-                    pb_loader.setVisibility(View.VISIBLE);
-                    request.update_password(password, password2, id_user, new MyRequest.UpdateCallback() {
-                        @Override
-                        public void onSuccess(String message) {
-                            pb_loader.setVisibility(View.GONE);
-                            Toast.makeText(UpdatePassword.this, message, Toast.LENGTH_SHORT).show();
-                        }
+        btn_update.setOnClickListener(v -> {
+            String password = til_password.getEditText().getText().toString().trim();
+            String password2 = til_password2.getEditText().getText().toString().trim();
+            if (password.length() > 0 && password2.length() > 0) {
+                pb_loader.setVisibility(View.VISIBLE);
+                request.update_password(password, password2, id_user, new MyRequest.UpdateCallback() {
+                    @Override
+                    public void onSuccess(String message) {
+                        pb_loader.setVisibility(View.GONE);
+                        Toast.makeText(UpdatePassword.this, message, Toast.LENGTH_SHORT).show();
+                    }
 
-                        // Gestion des erreurs retournées par Volley
-                        @Override
-                        public void inputErrors(Map<String, String> errors) {
-                            Log.d("ERRORS", errors.toString());
-                            pb_loader.setVisibility(View.GONE);
-                            if (errors.get("password") != null) {
-                                til_password.setError(errors.get("password"));
-                            } else {
-                                til_password.setErrorEnabled(false);
-                            }
+                    // Gestion des erreurs retournées par Volley
+                    @Override
+                    public void inputErrors(Map<String, String> errors) {
+                        Log.d("ERRORS", errors.toString());
+                        pb_loader.setVisibility(View.GONE);
+                        if (errors.get("password") != null) {
+                            til_password.setError(errors.get("password"));
+                        } else {
+                            til_password.setErrorEnabled(false);
                         }
+                    }
 
-                        @Override
-                        public void onError(String message) {
-                            pb_loader.setVisibility(View.GONE);
-                            Toast.makeText(UpdatePassword.this, message, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    Toast.makeText(UpdatePassword.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
-                    pb_loader.setVisibility(View.GONE);
-                }
+                    @Override
+                    public void onError(String message) {
+                        pb_loader.setVisibility(View.GONE);
+                        Toast.makeText(UpdatePassword.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(UpdatePassword.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
+                pb_loader.setVisibility(View.GONE);
             }
         });
     }

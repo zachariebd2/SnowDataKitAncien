@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.myrequest;
 
 import android.content.Context;
@@ -34,34 +38,31 @@ public class MyRequest {
     public void register(final String pseudo, final String email, final String password, final String password2, final RegisterCallback callback) {
         String url = URL_SERVEUR + "register.php";
 
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Map<String, String> errors = new HashMap<>();
-                try {
-                    JSONObject json = new JSONObject(response);
-                    Boolean error = json.getBoolean("error");
-                    if (!error) {
-                        callback.onSuccess("Vous êtes bien inscrit !");
+        StringRequest request = new StringRequest(Request.Method.POST, url, response -> {
+            Map<String, String> errors = new HashMap<>();
+            try {
+                JSONObject json = new JSONObject(response);
+                Boolean error = json.getBoolean("error");
+                if (!error) {
+                    callback.onSuccess("Vous êtes bien inscrit !");
 
-                    } else {
-                        JSONObject messages = json.getJSONObject("message");
-                        if (messages.has("pseudo")) {
-                            errors.put("pseudo", messages.getString("pseudo"));
-                        }
-                        if (messages.has("email")) {
-                            errors.put("email", messages.getString("email"));
-                        }
-                        if (messages.has("password")) {
-                            errors.put("password", messages.getString("password"));
-                        }
-                        callback.inputErrors(errors);
+                } else {
+                    JSONObject messages = json.getJSONObject("message");
+                    if (messages.has("pseudo")) {
+                        errors.put("pseudo", messages.getString("pseudo"));
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    if (messages.has("email")) {
+                        errors.put("email", messages.getString("email"));
+                    }
+                    if (messages.has("password")) {
+                        errors.put("password", messages.getString("password"));
+                    }
+                    callback.inputErrors(errors);
                 }
-
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -89,28 +90,25 @@ public class MyRequest {
     public void update_password(final String password, final String password2, final int id_user, final UpdateCallback callback) {
         String url = URL_SERVEUR + "updatePassword.php";
 
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Map<String, String> errors = new HashMap<>();
-                try {
-                    JSONObject json = new JSONObject(response);
-                    Boolean error = json.getBoolean("error");
-                    if (!error) {
-                        callback.onSuccess("Mot de passe modifié avec succès !");
+        StringRequest request = new StringRequest(Request.Method.POST, url, response -> {
+            Map<String, String> errors = new HashMap<>();
+            try {
+                JSONObject json = new JSONObject(response);
+                Boolean error = json.getBoolean("error");
+                if (!error) {
+                    callback.onSuccess("Mot de passe modifié avec succès !");
 
-                    } else {
-                        JSONObject messages = json.getJSONObject("message");
-                        if (messages.has("password")) {
-                            errors.put("password", messages.getString("password"));
-                        }
-                        callback.inputErrors(errors);
+                } else {
+                    JSONObject messages = json.getJSONObject("message");
+                    if (messages.has("password")) {
+                        errors.put("password", messages.getString("password"));
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    callback.inputErrors(errors);
                 }
-
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {

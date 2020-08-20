@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -15,7 +19,7 @@ public class GestionCompte extends AppCompatActivity {
     private String pseudo;
     private int id_user;
     private SessionManager sessionManager;
-    private float x1, x2;
+    private float x1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ public class GestionCompte extends AppCompatActivity {
                 x1 = touchEvent.getX();
                 break;
             case MotionEvent.ACTION_UP:
-                x2 = touchEvent.getX();
+                float x2 = touchEvent.getX();
 
                 // Swipe vers la gauche
                 if (x1 < x2) {

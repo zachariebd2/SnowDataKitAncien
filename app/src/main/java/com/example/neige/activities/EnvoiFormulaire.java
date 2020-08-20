@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -37,7 +41,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private double latitude, longitude;
     private int pourcentageNeige;
     private Button btn_sauvegarder;
-    private float x1, x2;
+    private float x1;
     private int saved_id_pourcentageNeige;
     private MyRequest request;
     private String pseudo;
@@ -235,7 +239,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
                 x1 = touchEvent.getX();
                 break;
             case MotionEvent.ACTION_UP: // Lorsque l'utilisateur retire son doigt de l'écran
-                x2 = touchEvent.getX();
+                float x2 = touchEvent.getX();
                 if (x1 < x2) {
                     Intent i = new Intent(this, NeigePourcentage.class);
                     // Données à renvoyer

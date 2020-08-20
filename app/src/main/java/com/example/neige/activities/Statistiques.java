@@ -1,10 +1,13 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité Statistiques
- * L'utilisateur peut simplement consulter des données le concernant (nombre de formulaires envoyés, rang)
- */
+
 public class Statistiques extends AppCompatActivity {
     String url = "http://osr-cesbio.ups-tlse.fr/sdk/statistiques.php";
     private int id_user;

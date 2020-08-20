@@ -1,9 +1,12 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,10 +41,11 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
     private int id_user;
     private String pseudo;
     private ArrayList<Formulaire> formList;
-    private RequestQueue queue;
     private MyRequest request;
+    private String FILE_NAME;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +59,11 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
             pseudo = extras.getString("pseudo");
         }
 
+        // Nom du fichier JSON
+        FILE_NAME = "formulaires_" + id_user + ".json";
+
         // Instanciation de la requête Volley via la classe VolleySingleton (Google)
-        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(this).getRequestQueue();
         request = new MyRequest(this, queue);
 
         listView = findViewById(R.id.liste_forms_hl);
@@ -64,67 +71,136 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
 
         // Envoi des formulaires sélectionnés
         Button btn_envoyer = findViewById(R.id.btn_envoyer);
-        btn_envoyer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn_envoyer.setOnClickListener(v -> {
+            final AlertDialog dialog = new AlertDialog.Builder(ListeFormulairesHorsLigne.this)
+                    .setTitle("Envoi")
+                    .setMessage("Êtes-vous sûr(e) de vouloir envoyer ce(s) formulaire(s) ?")
+                    .setPositiveButton("Oui", null)
+                    .setNegativeButton("Non", null)
+                    .show();
+
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(v1 -> {
                 final ArrayList<Formulaire> selectedForms = ((FormAdapter) listView.getAdapter()).getSelectFormList();
-                final AlertDialog dialog = new AlertDialog.Builder(ListeFormulairesHorsLigne.this)
-                        .setTitle("Envoi du formulaire")
-                        .setMessage("Êtes-vous sûr(e) de vouloir envoyer ce(s) formulaire(s) ?")
-                        .setPositiveButton("Oui", null)
-                        .setNegativeButton("Non", null)
-                        .show();
-
-                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setOnClickListener(new View.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                request.insertionFormulaireHL(selectedForms, new MyRequest.InsertionFormCallback() {
                     @Override
-                    public void onClick(View v) {
-                        request.insertionFormulaireHL(selectedForms, new MyRequest.InsertionFormCallback() {
-                            @Override
-                            public void onSuccess(String message) {
-                                Toast.makeText(ListeFormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
-                            }
+                    public void onSuccess(String message) {
+                        Toast.makeText(ListeFormulairesHorsLigne.this, message, Toast.LENGTH_SHORT).show();
+                        final ArrayList<Integer> positions = ((FormAdapter) listView.getAdapter()).getPositions();
+                        Log.d("SUPPLIST_FORMS", "tab : " + Arrays.toString(positions.toArray()));
 
-                            @Override
-                            public void inputErrors(Map<String, String> errors) {
-                                if (errors.get("req") != null) {
-                                    Toast.makeText(ListeFormulairesHorsLigne.this, errors.get("req"), Toast.LENGTH_SHORT).show();
+                        // Initialisation du JSON
+                        File f = new File(getFilesDir(), FILE_NAME);
+
+                        String formsStr = null;
+                        try {
+                            formsStr = lireForm(f);
+                            JSONObject obj = new JSONObject(formsStr);
+                            Log.d("JSONINITIAL_FORMS", obj.toString());
+                            JSONArray forms = obj.getJSONArray("formulaires");
+                            Log.d("JSONARRAY_FORMS", forms.toString());
+                            int j = 0;
+                            if (positions.size() > 0) {
+                                for (int i = positions.size() - 1; i >= 0; i--) {
+                                    j = positions.get(i);
+                                    formList.remove(j);
+                                    for (int k = 0; k < forms.length(); k++) {
+                                        if (forms.getJSONObject(k).getInt("id") == selectedForms.get(i).getId_Form()) {
+                                            forms.remove(k);
+                                        }
+                                    }
                                 }
+                                ((FormAdapter) listView.getAdapter()).notifyDataSetChanged();
+                                Toast.makeText(ListeFormulairesHorsLigne.this, positions.size() + " formulaire(s) a/ont été supprimé(s) !", Toast.LENGTH_SHORT).show();
+                                Log.d("JSONARRAY_FORMS", forms.toString());
+
+                            } else {
+                                Toast.makeText(ListeFormulairesHorsLigne.this, "Vous devez sélectionner au moins un formulaire à supprimer.", Toast.LENGTH_SHORT).show();
                             }
 
-                            @Override
-                            public void onError(String message) {
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("formulaires", forms);
+                            Log.d("JSONFINAL_FORMS", jsonObject.toString());
+                            stockerForm(jsonObject);
 
-                        dialog.dismiss();
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void inputErrors(Map<String, String> errors) {
+                        if (errors.get("req") != null) {
+                            Toast.makeText(ListeFormulairesHorsLigne.this, errors.get("req"), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
+
+                dialog.dismiss();
+            });
         });
 
         Button btn_supprimer = findViewById(R.id.btn_supprimer);
         btn_supprimer.setOnClickListener(v -> {
-            // TODO Suppression d'un/de plusieurs formulaire(s)
+            final AlertDialog dialog = new AlertDialog.Builder(ListeFormulairesHorsLigne.this)
+                    .setTitle("Suppression")
+                    .setMessage("Êtes-vous sûr(e) de vouloir supprimer ce(s) formulaire(s) ?")
+                    .setPositiveButton("Oui", null)
+                    .setNegativeButton("Non", null)
+                    .show();
 
-            final ArrayList<Integer> positions = ((FormAdapter) listView.getAdapter()).getPositions();
-            Log.d("SUPP_LIST", "tab : " + Arrays.toString(positions.toArray()));
-            Log.d("FORMLIST", Arrays.toString(formList.toArray()));
-            int j = 0;
-            if (positions.size() > 0) {
-                for (int i = positions.size() - 1; i >= 0; i--) {
-                    j = positions.get(i);
-                    Log.d("SUPP_LIST", "À supprimer (index) : " + positions.get(i));
-                    formList.remove(j);
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(v1 -> {
+                final ArrayList<Integer> positions = ((FormAdapter) listView.getAdapter()).getPositions();
+                final ArrayList<Formulaire> selectedForms = ((FormAdapter) listView.getAdapter()).getSelectFormList();
+                Log.d("SUPPLIST_FORMS", "tab : " + Arrays.toString(positions.toArray()));
+
+                // Initialisation du JSON
+                File f = new File(getFilesDir(), FILE_NAME);
+
+                String formsStr = null;
+                try {
+                    formsStr = lireForm(f);
+                    JSONObject obj = new JSONObject(formsStr);
+                    Log.d("JSONINITIAL_FORMS", obj.toString());
+                    JSONArray forms = obj.getJSONArray("formulaires");
+                    Log.d("JSONARRAY_FORMS", forms.toString());
+                    int j = 0;
+                    if (positions.size() > 0) {
+                        for (int i = positions.size() - 1; i >= 0; i--) {
+                            j = positions.get(i);
+                            formList.remove(j);
+                            for (int k = 0; k < forms.length(); k++) {
+                                if (forms.getJSONObject(k).getInt("id") == selectedForms.get(i).getId_Form()) {
+                                    forms.remove(k);
+                                }
+                            }
+                        }
+                        ((FormAdapter) listView.getAdapter()).notifyDataSetChanged();
+                        Toast.makeText(ListeFormulairesHorsLigne.this, positions.size() + " formulaire(s) a/ont été supprimé(s) !", Toast.LENGTH_SHORT).show();
+                        Log.d("JSONARRAY_FORMS", forms.toString());
+
+                    } else {
+                        Toast.makeText(ListeFormulairesHorsLigne.this, "Vous devez sélectionner au moins un formulaire à supprimer.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("formulaires", forms);
+                    Log.d("JSONFINAL_FORMS", jsonObject.toString());
+                    stockerForm(jsonObject);
+
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
                 }
-                ((FormAdapter) listView.getAdapter()).notifyDataSetChanged();
-                Toast.makeText(ListeFormulairesHorsLigne.this, positions.size() + " formulaire(s) a/ont été supprimé(s) !", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(ListeFormulairesHorsLigne.this, "Vous devez sélectionner au moins un formulaire à supprimer.", Toast.LENGTH_SHORT).show();
-            }
+                dialog.dismiss();
+            });
         });
+
 
     }
 
@@ -132,7 +208,7 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
         formList = new ArrayList<>();
 
         // Initialisation du JSON
-        File f = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+        File f = new File(getFilesDir(), FILE_NAME);
 
         // Vérification
         if (!f.exists())
@@ -179,7 +255,7 @@ public class ListeFormulairesHorsLigne extends AppCompatActivity {
     // Écrire le contenu dans le fichier JSON
     private void stockerForm(JSONObject jsonObject) throws IOException {
         String formStr = jsonObject.toString();
-        File file = new File(getFilesDir(), "formulaires_" + id_user + ".json");
+        File file = new File(getFilesDir(), FILE_NAME);
         FileWriter fileWriter = new FileWriter(file);
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         bufferedWriter.write(formStr);

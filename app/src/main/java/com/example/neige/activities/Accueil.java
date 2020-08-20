@@ -1,7 +1,5 @@
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité principale...
- * L'utilisateur peut saisir un nouveau formulaire, consulter ses formulaires envoyés/sauvegardés, et voir ses statistiques
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
  */
 
 package com.example.neige.activities;
@@ -9,7 +7,6 @@ package com.example.neige.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +18,6 @@ import com.example.neige.traitements.SessionManager;
 
 public class Accueil extends AppCompatActivity {
 
-    // Variables nécessaires
-    private SessionManager sessionManager;
     private String pseudo;
     private int id_user;
 
@@ -33,7 +28,8 @@ public class Accueil extends AppCompatActivity {
         setContentView(R.layout.activity_accueil);
 
         // Instanciation des variables
-        sessionManager = new SessionManager(this);
+        // Variables nécessaires
+        SessionManager sessionManager = new SessionManager(this);
         Button btn_listeformulaires_horsligne = findViewById(R.id.btn_listeformulaires_horsligne);
         Button btn_listeformulaires_bd = findViewById(R.id.btn_listeformulaires_bd);
         Button btn_nouveauformulaire = findViewById(R.id.btn_nouveauformulaire);
@@ -52,75 +48,57 @@ public class Accueil extends AppCompatActivity {
         tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
 
         // Ouvrir la liste de formulaires sauvegardés hors-ligne
-        btn_listeformulaires_horsligne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
-                i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id_user);
-                startActivity(i);
-                finish();
-            }
+        btn_listeformulaires_horsligne.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
+            i.putExtra("pseudo", pseudo);
+            i.putExtra("id_user", id_user);
+            startActivity(i);
+            finish();
         });
 
         // Ouvrir la liste des formulaires sauvegardés dans la base de données
-        btn_listeformulaires_bd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), FormulairesBD.class);
-                i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id_user);
-                startActivity(i);
-            }
+        btn_listeformulaires_bd.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), FormulairesBD.class);
+            i.putExtra("pseudo", pseudo);
+            i.putExtra("id_user", id_user);
+            startActivity(i);
         });
 
 
         // Ouvrir la fenêtre de localisation afin de saisir un nouveau formulaire
-        btn_nouveauformulaire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Localisation.class);
-                i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id_user);
-                startActivity(i);
-            }
+        btn_nouveauformulaire.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), Localisation.class);
+            i.putExtra("pseudo", pseudo);
+            i.putExtra("id_user", id_user);
+            startActivity(i);
         });
 
         // Ouvrir la fenêtre d'aide
-        btn_aide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
-                i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id_user);
-                startActivity(i);
-                finish();*/
-                Toast.makeText(Accueil.this, "Clic !", Toast.LENGTH_SHORT).show();
-            }
+        btn_aide.setOnClickListener(v -> {
+            /*Intent i = new Intent(getApplicationContext(), ListeFormulairesHorsLigne.class);
+            i.putExtra("pseudo", pseudo);
+            i.putExtra("id_user", id_user);
+            startActivity(i);
+            finish();*/
+            Toast.makeText(Accueil.this, "Clic !", Toast.LENGTH_SHORT).show();
         });
 
         // Ouvrir la fenêtre de statistiques
-        btn_statistiques.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Statistiques.class);
-                i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id_user);
-                startActivity(i);
-                finish();
-            }
+        btn_statistiques.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), Statistiques.class);
+            i.putExtra("pseudo", pseudo);
+            i.putExtra("id_user", id_user);
+            startActivity(i);
+            finish();
         });
 
         // Ouvrir la fenêtre de statistiques
-        btn_gestion_compte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), GestionCompte.class);
-                i.putExtra("pseudo", pseudo);
-                i.putExtra("id_user", id_user);
-                startActivity(i);
-                finish();
-            }
+        btn_gestion_compte.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), GestionCompte.class);
+            i.putExtra("pseudo", pseudo);
+            i.putExtra("id_user", id_user);
+            startActivity(i);
+            finish();
         });
     }
 }

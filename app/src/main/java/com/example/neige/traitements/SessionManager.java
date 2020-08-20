@@ -1,12 +1,13 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.traitements;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe pour gérer la session de l'utilisateur (savoir si celui-ci est connecté, et si tel est le cas => transmission des infos (pseudo, id) aux activités qui le demandent)
- */
+
 public class SessionManager {
     // Variables nécessaires
     private SharedPreferences prefs;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -30,7 +34,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FormulairesBD extends AppCompatActivity {
-    private ListView listView;
     private FormListAdapter adapter;
     public static ArrayList<Formulaire> formulaireArrayList = new ArrayList();
 
@@ -38,14 +41,14 @@ public class FormulairesBD extends AppCompatActivity {
     private Formulaire formulaire;
     private int id_user;
     private String pseudo;
-    private float x1, x2;
+    private float x1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulaires_b_d);
 
-        listView = findViewById(R.id.liste_formulaires_bd);
+        ListView listView = findViewById(R.id.liste_formulaires_bd);
         adapter = new FormListAdapter(this, R.layout.adapter_view_layout, formulaireArrayList);
         listView.setAdapter(adapter);
 
@@ -120,7 +123,7 @@ public class FormulairesBD extends AppCompatActivity {
                 x1 = touchEvent.getX();
                 break;
             case MotionEvent.ACTION_UP:
-                x2 = touchEvent.getX();
+                float x2 = touchEvent.getX();
 
                 // Swipe vers la gauche
                 if (x1 < x2) {

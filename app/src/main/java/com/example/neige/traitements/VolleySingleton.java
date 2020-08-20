@@ -1,5 +1,8 @@
-package com.example.neige.traitements;
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
 
+package com.example.neige.traitements;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,17 +13,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe fournie par Google et modifiée selon les besoins de l'application
- * Utilise le Design Pattern Singleton pour utiliser la librairie Volley (une seule instance pour toute l'application)
- */
 public class VolleySingleton {
 
     private static VolleySingleton mInstance;
+    private static Context mCtx;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private static Context mCtx;
 
 
     private VolleySingleton(Context context) {

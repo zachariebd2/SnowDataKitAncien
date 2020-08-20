@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -18,18 +22,10 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Map;
 
-/**
- * @author Salah-Eddine ET-TALEBY
- * Classe liée à l'activité Inscription
- * L'utilisateur peut s'inscrire en fournissant les informations suivantes (pseudo, email, mot de passe)
- */
 public class Inscription extends AppCompatActivity {
 
-    // Variables nécessaires
-    private Button btn_send_register;
     private TextInputLayout til_pseudo, til_email, til_password, til_password2;
     private ProgressBar pb_loader;
-    private RequestQueue queue;
     private MyRequest request;
 
     @Override
@@ -38,14 +34,15 @@ public class Inscription extends AppCompatActivity {
         setContentView(R.layout.activity_inscription);
 
         // Instanciation des variables
-        btn_send_register = findViewById(R.id.btn_send_register);
+        // Variables nécessaires
+        Button btn_send_register = findViewById(R.id.btn_send_register);
         til_pseudo = findViewById(R.id.til_pseudo_register);
         til_email = findViewById(R.id.til_email_register);
         til_password = findViewById(R.id.til_password_register);
         til_password2 = findViewById(R.id.til_password2_register);
         pb_loader = findViewById(R.id.pb_loader_register);
 
-        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(this).getRequestQueue();
         request = new MyRequest(this, queue);
 
         btn_send_register.setOnClickListener(new View.OnClickListener() {

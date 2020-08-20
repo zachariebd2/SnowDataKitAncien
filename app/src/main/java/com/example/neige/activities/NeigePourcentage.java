@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Salah-Eddine ET-TALEBY, CESBIO 2020
+ */
+
 package com.example.neige.activities;
 
 import android.content.Intent;
@@ -15,13 +19,11 @@ import com.example.neige.R;
 public class NeigePourcentage extends AppCompatActivity {
 
     private RadioGroup radioGroup;
-    private RadioButton radioButton;
-    private float x1, x2;
+    private float x1;
     private int restoredAccuracy, restoredAltitude, pourcentageNeige;
     private double restoredLatitude, restoredLongitude;
     private String pseudo;
     private int id_user;
-    private TextView tv_loggeEnTantQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +48,13 @@ public class NeigePourcentage extends AppCompatActivity {
             radioGroup.check(restoredIdPourcentageNeige);
         }
 
-        tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
+        TextView tv_loggeEnTantQue = findViewById(R.id.tv_loggeEnTantQue);
         tv_loggeEnTantQue.setText("Vous êtes loggé avec le compte " + pseudo);
     }
 
     public void check(View v) {
         int radioId = radioGroup.getCheckedRadioButtonId();
-        radioButton = findViewById(radioId);
+        RadioButton radioButton = findViewById(radioId);
         String pourcentageNeigeSplit = radioButton.getText().toString().substring(0, radioButton.getText().toString().length() - 1);
         pourcentageNeige = Integer.parseInt(pourcentageNeigeSplit);
     }
@@ -64,7 +66,7 @@ public class NeigePourcentage extends AppCompatActivity {
                 x1 = touchEvent.getX();
                 break;
             case MotionEvent.ACTION_UP: // Lorsque l'utilisateur retire son doigt de l'écran
-                x2 = touchEvent.getX();
+                float x2 = touchEvent.getX();
                 if (x1 < x2) {
                     Intent i = new Intent(this, Localisation.class);
                     // Données de la localisation
