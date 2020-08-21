@@ -108,4 +108,18 @@ public class FormAdapter extends BaseAdapter {
         }
         return list;
     }
+
+    public void selectAll() {
+        for (int i = 0; i < formList.size(); i++) {
+            formList.get(i).setSelected(true);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void unselectAll() {
+        for (int i = 0; i < formList.size(); i++) {
+            formList.get(i).setSelected(false);
+        }
+        notifyDataSetChanged();
+    }
 }

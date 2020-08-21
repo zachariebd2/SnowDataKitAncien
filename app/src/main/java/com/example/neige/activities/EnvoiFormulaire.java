@@ -40,7 +40,6 @@ public class EnvoiFormulaire extends AppCompatActivity {
     private int accuracy, altitude;
     private double latitude, longitude;
     private int pourcentageNeige;
-    private Button btn_sauvegarder;
     private float x1;
     private int saved_id_pourcentageNeige;
     private MyRequest request;
@@ -75,7 +74,6 @@ public class EnvoiFormulaire extends AppCompatActivity {
         RequestQueue queue = VolleySingleton.getInstance(this).getRequestQueue();
         request = new MyRequest(this, queue);
 
-        btn_sauvegarder = findViewById(R.id.btn_sauvegarderFormulaire);
         Button btn_retourAccueil = findViewById(R.id.btn_retourAccueil);
 
         // Clic sur le bouton "Sauvegarder hors-ligne"
@@ -88,8 +86,12 @@ public class EnvoiFormulaire extends AppCompatActivity {
                     // Si le fichier n'existe pas, on en crée un, sinon on ajoute l'objet au fichier JSON existant
                     form = !file.exists() ? ajouterForm() : addFormToJson(lireForm(file));
                     stockerForm(form);
-                    btn_sauvegarder.setEnabled(false); // On désactive le bouton
-                    Toast.makeText(EnvoiFormulaire.this, "Le formulaire a été sauvegardé !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnvoiFormulaire.this, "Le formulaire a bien été sauvegardé !", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(), Accueil.class);
+                    i.putExtra("pseudo", pseudo);
+                    i.putExtra("id_user", id_user);
+                    startActivity(i);
+                    finish();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -189,7 +191,20 @@ public class EnvoiFormulaire extends AppCompatActivity {
         JSONObject form = new JSONObject();
         String date = getDateDuJour();
 
-        form.put("id", !file.exists() ? 1 : recupererId(lireForm(file)) + 1);
+
+        // Si le fichier n'existe pas, on met l'ID à 1
+        if (!file.exists()) {
+            form.put("id", 1);
+        } else { // Sinon, si le fichier existe, on récupère son contenu (array formulaires contenant tous les formulaires)
+            String formsStr = lireForm(file);
+            JSONObject obj = new JSONObject(formsStr);
+            JSONArray forms = obj.getJSONArray("formulaires");
+            if (forms.length() <= 0) { // Si cet array est vide, alors on met l'ID à 1
+                form.put("id", 1);
+            } else { // Sinon, on incrémente l'ID
+                form.put("id", recupererId(formsStr) + 1);
+            }
+        }
 
         // On insère les données
         form.put("id_user", id_user);
@@ -205,7 +220,7 @@ public class EnvoiFormulaire extends AppCompatActivity {
     }
 
     private String getDateDuJour() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date d = new Date();
         return dateFormat.format(d);
     }
