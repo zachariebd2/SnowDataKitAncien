@@ -59,7 +59,7 @@
         android:text="@string/login"
         android:textColor="@android:color/white" />
 
-    <Button
+    <!--<Button
         android:id="@+id/btn_forgot_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/button_rounded_grey"
         android:text="Mot de passe oublié"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white" />-->
 
     <ProgressBar
         android:id="@+id/pb_loader_login"
